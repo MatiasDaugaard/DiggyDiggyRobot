@@ -1,11 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
     [SerializeField]
-    private GameObject go;
+    private List<GameObject> blocks;
 
     public void GenerateWorld()
     {
@@ -15,15 +15,31 @@ public class Spawn : MonoBehaviour
             GameObject.DestroyImmediate(transform.GetChild(0).gameObject);
         }
 
-        // Generate blocks
-        for (int y = -20; y < 0; y++)
+        // Map blocks
+        var map = new Dictionary<MineralType, GameObject>();
+        foreach (GameObject blockType in blocks)
         {
-            for (int z = -10; z <= 10; z++)
+            Mineral m = blockType.GetComponent<Mineral>();
+            map.Add(m.Type, blockType);
+        }
+
+        // Generate matrix
+        int width = 20;
+        int height = 20;
+
+        // Generate blocks
+        GameObject block;
+        for (int y = 0; y <= height; y++)
+        {
+            for (int z = 0; z <= width; z++)
             {
-                GameObject instance = Instantiate(go);
+                int blockY = y - height - 1;
+                int blockZ = z - width / 2;
+                map.TryGetValue(MineralType.Ground, out block);
+                GameObject instance = Instantiate(block);
                 Transform t = instance.transform;
                 t.parent = transform;
-                t.position = new Vector3(0.25f, 0.5f * y, z * 0.5f);
+                t.position = new Vector3(0.25f, 0.5f * blockY, blockZ * 0.5f);
             }
         }
     }

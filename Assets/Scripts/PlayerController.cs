@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     public GameObject hpbar;
     public GameObject moneybar;
+    public GameObject shopMenu;
     
 
     //Player variables
@@ -17,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private float speed;
     private int money;
     private Hashtable bag;
+    private int fuel;
+    private int maxFuel;
 
     //Weapon variables
     private GameObject weapon;
@@ -33,6 +36,17 @@ public class PlayerController : MonoBehaviour
     private float miningDistanceY;
     private float miningDistanceZ;
     private int miningSpeed;
+
+    public void refuel()
+    {
+        //fuel = maxFuel;
+        print("refueling!!");
+    }
+
+    public void upgradeDrill()
+    {
+        miningSpeed -= 5;
+    }
 
 
     private void Start()
@@ -135,6 +149,16 @@ public class PlayerController : MonoBehaviour
     {
         weapon.transform.position = gameObject.transform.position + new Vector3(0.0f, 0.35f, 0.0f);
         speed = rb.velocity.y;
+        if (rb.position.y > -0.0255f && rb.position.y < -0.0245f && rb.position.z <= 3.5f && rb.position.z >= 2.5f)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Time.timeScale = 0;
+                shopMenu.SetActive(true);
+            }
+            
+        }
+
     }
 
     private void StartMining(GameObject block, char dir)

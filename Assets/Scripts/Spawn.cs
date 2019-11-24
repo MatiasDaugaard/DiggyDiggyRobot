@@ -12,7 +12,7 @@ public class Spawn : MonoBehaviour
         // Cleanup
         while (transform.childCount > 0)
         {
-            GameObject.DestroyImmediate(transform.GetChild(0).gameObject);
+            DestroyImmediate(transform.GetChild(0).gameObject);
         }
 
         // Map blocks
@@ -24,18 +24,25 @@ public class Spawn : MonoBehaviour
         }
 
         // Generate matrix
-        int width = 20;
+        int width = 21;
         int height = 20;
+        MineralType[,] world = new MineralType[width,height];
 
+        for (int i = 0; i < 5; i++)
+        {
+            // Insert copper
+        }
+        
         // Generate blocks
         GameObject block;
-        for (int y = 0; y <= height; y++)
+        for (int y = 0; y < height; y++)
         {
-            for (int z = 0; z <= width; z++)
+            for (int z = 0; z < width; z++)
             {
-                int blockY = y - height - 1;
+                MineralType blockType = world[z, y];
+                int blockY = y - height;
                 int blockZ = z - width / 2;
-                map.TryGetValue(MineralType.Ground, out block);
+                map.TryGetValue(blockType, out block);
                 GameObject instance = Instantiate(block);
                 Transform t = instance.transform;
                 t.parent = transform;

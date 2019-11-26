@@ -4,6 +4,8 @@ using System;
 using UnityEngine;
 public enum MineralType
 {
+    Empty,
+    Solid,
     Ground,
     Copper,
     Iron,

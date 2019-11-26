@@ -21,16 +21,26 @@ public class Spawn : MonoBehaviour
         {
             Mineral m = blockType.GetComponent<Mineral>();
             map.Add(m.Type, blockType);
+            Debug.Log(m.Type);
         }
 
         // Generate matrix
         int width = 21;
         int height = 20;
         MineralType[,] world = new MineralType[width,height];
-
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < width; i++)
         {
-            // Insert copper
+            for (int j = 0; j < height; j++)
+            {
+                world[i, j] = MineralType.Ground;
+            }
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            int x = Random.Range(0, width);
+            int y = Random.Range(0, height/2);
+            world[x, y] = MineralType.Copper;
         }
         
         // Generate blocks

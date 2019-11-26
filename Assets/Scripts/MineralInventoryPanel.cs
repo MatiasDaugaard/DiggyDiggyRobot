@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class MineralInventoryPanel : MonoBehaviour
 {
+
     [SerializeField]
-    private List<MineralPanel> minerals;
+    private MineralPanel template;
+    [SerializeField]
+    private List<MineralPanelData> minerals;
+
+    private void Start()
+    {
+        foreach (MineralPanelData mineral in minerals)
+        {
+            MineralPanel panel = Instantiate(template, transform);
+            panel.Init(mineral);
+        }
+    }
+
 }

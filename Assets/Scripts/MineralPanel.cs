@@ -1,25 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-[Serializable]
-public class MineralPanel : System.Object
+public class MineralPanel : MonoBehaviour
 {
-    public MineralType Type {
-        get { return type; }
-    }
-
-    public string Name {
-        get { return type.ToString(); }
-    }
-
-    public Sprite Icon {
-        get { return icon; }
-    }
-
     [SerializeField]
-    private MineralType type;
+    private Image image;
     [SerializeField]
-    private Sprite icon;
+    private Text text;
+
+    public void Init(MineralPanelData data)
+    {
+        image.sprite = data.Icon;
+        text.text = "0";
+    }
 }

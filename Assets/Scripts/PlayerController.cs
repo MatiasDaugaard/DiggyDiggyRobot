@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public GameObject hpbar;
     public GameObject moneybar;
     public GameObject shopMenu;
-    
+    public MineralInventoryPanel inventory;
 
     //Player variables
     private Rigidbody rb;
@@ -25,9 +25,8 @@ public class PlayerController : MonoBehaviour
     private GameObject weapon;
     private float weaponDamage;
 
-
     //Mining Variables
-    private GameObject blockBeingMined;
+    private Mineral blockBeingMined;
     private long timer;
     private int mineCount;
     private int mineCountMax;
@@ -87,6 +86,16 @@ public class PlayerController : MonoBehaviour
         blockBeingMined.GetComponent<Renderer>().material.color = new Color(col.r, col.g, col.b, col.a - disappearingsRate);
     }
 
+    private void AddInventory(Mineral mineral)
+    {
+        AddInventory(mineral.Type);
+    }
+
+    private void AddInventory(MineralType mineral)
+    {
+        inventory.Add(mineral);
+    }
+
     private void FixedUpdate()
     {
         if (blockBeingMined != null)
@@ -99,7 +108,8 @@ public class PlayerController : MonoBehaviour
             }
             if (mineCount == mineCountMax)
             {
-                blockBeingMined.SetActive(false);
+                AddInventory(blockBeingMined);
+                blockBeingMined.gameObject.SetActive(false);
                 blockBeingMined = null;
                 mineCount = 0;
                 rb.isKinematic = false;
@@ -166,7 +176,7 @@ public class PlayerController : MonoBehaviour
         if (!weapon.activeSelf)
         {
             timer = System.DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            blockBeingMined = block;
+            blockBeingMined = block.GetComponent<Mineral>();
             if (dir == 'D')
             {
                 miningDistanceY = (block.transform.position.y - rb.transform.position.y) / mineCountMax;

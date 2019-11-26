@@ -13381,6 +13381,7 @@ MonoBehaviour:
   hpbar: {fileID: 117201281}
   moneybar: {fileID: 1798690974}
   shopMenu: {fileID: 14118975}
+  inventory: {fileID: 1386995004}
 --- !u!1 &573487663
 GameObject:
   m_ObjectHideFlags: 0

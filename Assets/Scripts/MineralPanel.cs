@@ -13,6 +13,11 @@ public class MineralPanel : MonoBehaviour
     public void Init(MineralPanelData data)
     {
         image.sprite = data.Icon;
-        text.text = "0";
+        SetValue(0);
+    }
+
+    public void SetValue(int value)
+    {
+        text.text = value.ToString();
     }
 }

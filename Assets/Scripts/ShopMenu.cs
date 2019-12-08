@@ -21,6 +21,8 @@ public class ShopMenu : MonoBehaviour
     public Button fifthUpgrade;
     public Button sixthUpgrade;
 
+    public Button doneButton;
+
     void Start()
     {
         drillButton.GetComponentInChildren<Text>().text = "Upgrade Drill";

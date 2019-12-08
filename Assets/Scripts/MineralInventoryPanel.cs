@@ -19,7 +19,7 @@ public class MineralInventoryPanel : MonoBehaviour
         foreach (MineralPanelData mineral in minerals)
         {
             MineralPanel panel = Instantiate(template, transform);
-            inventory[mineral.Type] = 1000;
+            inventory[mineral.Type] = 0;
             panels[mineral.Type] = panel;
             panel.Init(mineral);
         }

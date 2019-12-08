@@ -165,6 +165,9 @@ public class PlayerController : MonoBehaviour
             //Lose stuff from bag
             //Respawn
         }
+        if(fuel <= 0.0f){
+            //DIE??
+        }
         speed = rb.velocity.y;
         if (rb.position.y > -0.0255f && rb.position.y < -0.0245f && rb.position.z <= 3.5f && rb.position.z >= 2.5f)
         {
@@ -273,13 +276,13 @@ public class PlayerController : MonoBehaviour
         OnCollision(collision);  
     }
 
-    public void refuel()
+    public void Refuel()
     {
         fuel = maxFuel;
         fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
     }
 
-    private bool upgradeEquipment(string upgrade)
+    private bool UpgradeEquipment(string upgrade)
     {
         switch (upgrade)
         {
@@ -339,49 +342,49 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void upgradeDrill(int no)
+    public void UpgradeDrill(int no)
     {
         if (!drillUpgrades[no])
         {
             switch (no)
             {
                 case 0:
-                    if (upgradeEquipment("Copper"))
+                    if (UpgradeEquipment("Copper"))
                     {
                         miningSpeed -= 2;
                         drillUpgrades[no] = true;
                     }
                     break;
                 case 1:
-                    if (upgradeEquipment("Bronze"))
+                    if (UpgradeEquipment("Bronze"))
                     {
                         miningSpeed -= 3;
                         drillUpgrades[no] = true;
                     }
                     break;
                 case 2:
-                    if (upgradeEquipment("Iron"))
+                    if (UpgradeEquipment("Iron"))
                     {
                         miningSpeed -= 5;
                         drillUpgrades[no] = true;
                     }
                     break;
                 case 3:
-                    if (upgradeEquipment("Silver"))
+                    if (UpgradeEquipment("Silver"))
                     {
                         miningSpeed -= 5;
                         drillUpgrades[no] = true;
                     }
                     break;
                 case 4:
-                    if (upgradeEquipment("Platinum"))
+                    if (UpgradeEquipment("Platinum"))
                     {
                         miningSpeed -= 7;
                         drillUpgrades[no] = true;
                     }
                     break;
                 case 5:
-                    if (upgradeEquipment("Titanium"))
+                    if (UpgradeEquipment("Titanium"))
                     {
                         miningSpeed -= 8;
                         drillUpgrades[no] = true;
@@ -394,49 +397,49 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void upgradeArmor(int no)
+    public void UpgradeArmor(int no)
     {
         if (!armorUpgrades[no])
         {
             switch (no)
             {
                 case 0:
-                    if (upgradeEquipment("Copper"))
+                    if (UpgradeEquipment("Copper"))
                     {
                         maxHealth += 10;
                         armorUpgrades[no] = true;
                     }
                     break;
                 case 1:
-                    if (upgradeEquipment("Bronze"))
+                    if (UpgradeEquipment("Bronze"))
                     {
                         maxHealth += 15;
                         armorUpgrades[no] = true;
                     }
                     break;
                 case 2:
-                    if (upgradeEquipment("Iron"))
+                    if (UpgradeEquipment("Iron"))
                     {
                         maxHealth += 25;
                         armorUpgrades[no] = true;
                     }
                     break;
                 case 3:
-                    if (upgradeEquipment("Silver"))
+                    if (UpgradeEquipment("Silver"))
                     {
                         maxHealth += 25;
                         armorUpgrades[no] = true;
                     }
                     break;
                 case 4:
-                    if (upgradeEquipment("Platinum"))
+                    if (UpgradeEquipment("Platinum"))
                     {
                         maxHealth += 35;
                         armorUpgrades[no] = true;
                     }
                     break;
                 case 5:
-                    if (upgradeEquipment("Titanium"))
+                    if (UpgradeEquipment("Titanium"))
                     {
                         maxHealth += 40;
                         armorUpgrades[no] = true;
@@ -445,53 +448,54 @@ public class PlayerController : MonoBehaviour
                 default:
                     break;
             }
+            hpbar.GetComponent<Text>().text = "HP: " + health.ToString("n2") + "/" + (int)maxHealth;
 
         }
     }
 
-    public void upgradeJet(int no)
+    public void UpgradeJet(int no)
     {
         if (!jetUpgrades[no])
         {
             switch (no)
             {
                 case 0:
-                    if (upgradeEquipment("Copper"))
+                    if (UpgradeEquipment("Copper"))
                     {
                         speedMultiplier += 0.1f;
                         jetUpgrades[no] = true;
                     }
                     break;
                 case 1:
-                    if (upgradeEquipment("Bronze"))
+                    if (UpgradeEquipment("Bronze"))
                     {
                         speedMultiplier += 0.15f;
                         jetUpgrades[no] = true;
                     }
                     break;
                 case 2:
-                    if (upgradeEquipment("Iron"))
+                    if (UpgradeEquipment("Iron"))
                     {
                         speedMultiplier += 0.2f;
                         jetUpgrades[no] = true;
                     }
                     break;
                 case 3:
-                    if (upgradeEquipment("Silver"))
+                    if (UpgradeEquipment("Silver"))
                     {
                         speedMultiplier += 0.25f;
                         jetUpgrades[no] = true;
                     }
                     break;
                 case 4:
-                    if (upgradeEquipment("Platinum"))
+                    if (UpgradeEquipment("Platinum"))
                     {
                         speedMultiplier += 0.3f;
                         jetUpgrades[no] = true;
                     }
                     break;
                 case 5:
-                    if (upgradeEquipment("Titanium"))
+                    if (UpgradeEquipment("Titanium"))
                     {
                         speedMultiplier += 0.5f;
                         jetUpgrades[no] = true;
@@ -504,49 +508,49 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void upgradeFuel(int no)
+    public void UpgradeFuel(int no)
     {
         if (!fuelUpgrades[no])
         {
             switch (no)
             {
                 case 0:
-                    if (upgradeEquipment("Copper"))
+                    if (UpgradeEquipment("Copper"))
                     {
                         maxFuel += 10;
                         fuelUpgrades[no] = true;
                     }
                     break;
                 case 1:
-                    if (upgradeEquipment("Bronze"))
+                    if (UpgradeEquipment("Bronze"))
                     {
                         maxFuel += 15;
                         fuelUpgrades[no] = true;
                     }
                     break;
                 case 2:
-                    if (upgradeEquipment("Iron"))
+                    if (UpgradeEquipment("Iron"))
                     {
                         maxFuel += 25;
                         fuelUpgrades[no] = true;
                     }
                     break;
                 case 3:
-                    if (upgradeEquipment("Silver"))
+                    if (UpgradeEquipment("Silver"))
                     {
                         maxFuel += 25;
                         fuelUpgrades[no] = true;
                     }
                     break;
                 case 4:
-                    if (upgradeEquipment("Platinum"))
+                    if (UpgradeEquipment("Platinum"))
                     {
                         maxFuel += 35;
                         fuelUpgrades[no] = true;
                     }
                     break;
                 case 5:
-                    if (upgradeEquipment("Titanium"))
+                    if (UpgradeEquipment("Titanium"))
                     {
                         maxFuel += 40;
                         fuelUpgrades[no] = true;
@@ -555,53 +559,54 @@ public class PlayerController : MonoBehaviour
                 default:
                     break;
             }
+            fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
 
         }
     }
 
-    public void upgradeWeapon(int no)
+    public void UpgradeWeapon(int no)
     {
         if (!weaponUpgrades[no])
         {
             switch (no)
             {
                 case 0:
-                    if (upgradeEquipment("Copper"))
+                    if (UpgradeEquipment("Copper"))
                     {
                         weaponDamage += 2;
                         weaponUpgrades[no] = true;
                     }
                     break;
                 case 1:
-                    if (upgradeEquipment("Bronze"))
+                    if (UpgradeEquipment("Bronze"))
                     {
                         weaponDamage += 3;
                         weaponUpgrades[no] = true;
                     }
                     break;
                 case 2:
-                    if (upgradeEquipment("Iron"))
+                    if (UpgradeEquipment("Iron"))
                     {
                         weaponDamage += 3;
                         weaponUpgrades[no] = true;
                     }
                     break;
                 case 3:
-                    if (upgradeEquipment("Silver"))
+                    if (UpgradeEquipment("Silver"))
                     {
                         weaponDamage += 5;
                         weaponUpgrades[no] = true;
                     }
                     break;
                 case 4:
-                    if (upgradeEquipment("Platinum"))
+                    if (UpgradeEquipment("Platinum"))
                     {
                         weaponDamage += 5;
                         weaponUpgrades[no] = true;
                     }
                     break;
                 case 5:
-                    if (upgradeEquipment("Titanium"))
+                    if (UpgradeEquipment("Titanium"))
                     {
                         weaponDamage += 7;
                         weaponUpgrades[no] = true;
@@ -614,27 +619,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool[] getDrillUpgrades()
+    public bool[] GetDrillUpgrades()
     {
         return drillUpgrades;
     }
 
-    public bool[] getArmorUpgrades()
+    public bool[] GetArmorUpgrades()
     {
         return armorUpgrades;
     }
 
-    public bool[] getJetUpgrades()
+    public bool[] GetJetUpgrades()
     {
         return jetUpgrades;
     }
 
-    public bool[] getFuelUpgrades()
+    public bool[] GetFuelUpgrades()
     {
         return fuelUpgrades;
     }
 
-    public bool[] getWeaponUpgrades()
+    public bool[] GetWeaponUpgrades()
     {
         return weaponUpgrades;
     }

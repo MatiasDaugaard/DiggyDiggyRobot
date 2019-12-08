@@ -179,7 +179,6 @@ public class ShopMenu : MonoBehaviour
     {
         bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().getDrillUpgrades();
         Upgrade(upgrades, "Drill");
-        
     }
 
     void ArmorOnClick()

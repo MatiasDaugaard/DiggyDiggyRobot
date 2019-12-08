@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private float health;
     private float maxHealth;
     private float speed;
+    private float speedMultiplier;
     private float fuel;
     private float maxFuel;
 
@@ -50,6 +51,8 @@ public class PlayerController : MonoBehaviour
         maxHealth = 20.0f;
         fuel = 20.0f;
         maxFuel = 20.0f;
+        speedMultiplier = 1.0f;
+        weaponDamage = 5.0f;
         hpbar.GetComponent<Text>().text = "HP: " + health.ToString("n2") + "/" + (int)maxHealth;
         fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
 
@@ -124,7 +127,7 @@ public class PlayerController : MonoBehaviour
                     Vector3 movement = new Vector3(0.0f, moveVertical * verticalSpeed, moveHorizontal * horisontalSpeed);
                     fuel = fuel - 0.01f;
                     fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
-                    rb.AddForce(movement);
+                    rb.AddForce(movement*speedMultiplier);
                     
                 }
                 if (Input.GetKeyDown(KeyCode.W))
@@ -455,42 +458,42 @@ public class PlayerController : MonoBehaviour
                 case 0:
                     if (upgradeEquipment("Copper"))
                     {
-                        //Do something to movement speed
+                        speedMultiplier += 0.1f;
                         jetUpgrades[no] = true;
                     }
                     break;
                 case 1:
                     if (upgradeEquipment("Bronze"))
                     {
-                        //Do something to movement speed
+                        speedMultiplier += 0.15f;
                         jetUpgrades[no] = true;
                     }
                     break;
                 case 2:
                     if (upgradeEquipment("Iron"))
                     {
-                        //Do something to movement speed
+                        speedMultiplier += 0.2f;
                         jetUpgrades[no] = true;
                     }
                     break;
                 case 3:
                     if (upgradeEquipment("Silver"))
                     {
-                        //Do something to movement speed
+                        speedMultiplier += 0.25f;
                         jetUpgrades[no] = true;
                     }
                     break;
                 case 4:
                     if (upgradeEquipment("Platinum"))
                     {
-                        //Do something to movement speed
+                        speedMultiplier += 0.3f;
                         jetUpgrades[no] = true;
                     }
                     break;
                 case 5:
                     if (upgradeEquipment("Titanium"))
                     {
-                        //Do something to movement speed
+                        speedMultiplier += 0.5f;
                         jetUpgrades[no] = true;
                     }
                     break;
@@ -565,42 +568,42 @@ public class PlayerController : MonoBehaviour
                 case 0:
                     if (upgradeEquipment("Copper"))
                     {
-                        //Do something to weapon power
+                        weaponDamage += 2;
                         weaponUpgrades[no] = true;
                     }
                     break;
                 case 1:
                     if (upgradeEquipment("Bronze"))
                     {
-                        //Do something to weapon power
+                        weaponDamage += 3;
                         weaponUpgrades[no] = true;
                     }
                     break;
                 case 2:
                     if (upgradeEquipment("Iron"))
                     {
-                        //Do something to weapon power
+                        weaponDamage += 3;
                         weaponUpgrades[no] = true;
                     }
                     break;
                 case 3:
                     if (upgradeEquipment("Silver"))
                     {
-                        //Do something to weapon power
+                        weaponDamage += 5;
                         weaponUpgrades[no] = true;
                     }
                     break;
                 case 4:
                     if (upgradeEquipment("Platinum"))
                     {
-                        //Do something to weapon power
+                        weaponDamage += 5;
                         weaponUpgrades[no] = true;
                     }
                     break;
                 case 5:
                     if (upgradeEquipment("Titanium"))
                     {
-                        //Do something to weapon power
+                        weaponDamage += 7;
                         weaponUpgrades[no] = true;
                     }
                     break;

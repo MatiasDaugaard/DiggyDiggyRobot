@@ -16,11 +16,12 @@ public class PlayerController : MonoBehaviour
     //Player variables
     private Rigidbody rb;
     private float health;
+    private float maxHealth;
     private float speed;
     private float fuel;
     private float maxFuel;
 
-    //Upgrade variables
+    //Equipment variables
     private bool[] armorUpgrades = { false, false, false, false, false, false };
     private bool[] fuelUpgrades = { false, false, false, false, false, false };
     private bool[] jetUpgrades = { false, false, false, false, false, false };
@@ -42,56 +43,14 @@ public class PlayerController : MonoBehaviour
     private float miningDistanceZ;
     private int miningSpeed;
 
-    public void refuel()
-    {
-        fuel = maxFuel;
-        fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
-    }
-
-    public void upgradeDrill(int no)
-    {
-        if (!drillUpgrades[no - 1])
-        {
-            drillUpgrades[no - 1] = true;
-            switch (no)
-            {
-                case 1:
-                    miningSpeed -= 2;
-                    break;
-                case 2:
-                    miningSpeed -= 3;
-                    break;
-                case 3:
-                    miningSpeed -= 5;
-                    break;
-                case 4:
-                    miningSpeed -= 5;
-                    break;
-                case 5:
-                    miningSpeed -= 7;
-                    break;
-                case 6:
-                    miningSpeed -= 8;
-                    break;
-                default:
-                    break;
-            }
-            
-        }   
-    }
-
-    public bool[] getDrillUpgrades()
-    {
-        return drillUpgrades;
-    }
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         health = 20.0f;
+        maxHealth = 20.0f;
         fuel = 20.0f;
         maxFuel = 20.0f;
-        hpbar.GetComponent<Text>().text = "HP: " + health.ToString("n2");
+        hpbar.GetComponent<Text>().text = "HP: " + health.ToString("n2") + "/" + (int)maxHealth;
         fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
 
 
@@ -310,4 +269,371 @@ public class PlayerController : MonoBehaviour
     {
         OnCollision(collision);  
     }
+
+    public void refuel()
+    {
+        fuel = maxFuel;
+        fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
+    }
+
+    private bool upgradeEquipment(string upgrade)
+    {
+        switch (upgrade)
+        {
+            case "Copper":
+                if (inventory.Get(MineralType.Copper) >= 10)
+                {
+                    inventory.Remove(MineralType.Copper, 10);
+                    return true;
+                }
+                return false;
+            case "Bronze":
+                if (inventory.Get(MineralType.Copper) >= 15 && inventory.Get(MineralType.Iron) >= 5)
+                {
+                    inventory.Remove(MineralType.Copper, 15);
+                    inventory.Remove(MineralType.Iron, 5);
+                    return true;
+                }
+                return false;
+
+            case "Iron":
+                if (inventory.Get(MineralType.Copper) >= 5 && inventory.Get(MineralType.Iron) >= 20)
+                {
+                    inventory.Remove(MineralType.Copper, 5);
+                    inventory.Remove(MineralType.Iron, 20);
+                    return true;
+                }
+                return false;
+
+            case "Silver":
+                if (inventory.Get(MineralType.Iron) >= 25 && inventory.Get(MineralType.Titanium) >= 5)
+                {
+                    inventory.Remove(MineralType.Iron, 25);
+                    inventory.Remove(MineralType.Titanium, 5);
+                    return true;
+                }
+                return false;
+
+            case "Platinum":
+                if (inventory.Get(MineralType.Copper) >= 10 && inventory.Get(MineralType.Iron) >= 15 && inventory.Get(MineralType.Titanium) >= 20)
+                {
+                    inventory.Remove(MineralType.Copper, 10);
+                    inventory.Remove(MineralType.Iron, 15);
+                    inventory.Remove(MineralType.Titanium, 20);
+                    return true;
+                }
+                return false;
+
+            case "Titanium":
+                if (inventory.Get(MineralType.Titanium) >= 100)
+                {
+                    inventory.Remove(MineralType.Titanium, 100);
+                    return true;
+                }
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    public void upgradeDrill(int no)
+    {
+        if (!drillUpgrades[no])
+        {
+            switch (no)
+            {
+                case 0:
+                    if (upgradeEquipment("Copper"))
+                    {
+                        miningSpeed -= 2;
+                        drillUpgrades[no] = true;
+                    }
+                    break;
+                case 1:
+                    if (upgradeEquipment("Bronze"))
+                    {
+                        miningSpeed -= 3;
+                        drillUpgrades[no] = true;
+                    }
+                    break;
+                case 2:
+                    if (upgradeEquipment("Iron"))
+                    {
+                        miningSpeed -= 5;
+                        drillUpgrades[no] = true;
+                    }
+                    break;
+                case 3:
+                    if (upgradeEquipment("Silver"))
+                    {
+                        miningSpeed -= 5;
+                        drillUpgrades[no] = true;
+                    }
+                    break;
+                case 4:
+                    if (upgradeEquipment("Platinum"))
+                    {
+                        miningSpeed -= 7;
+                        drillUpgrades[no] = true;
+                    }
+                    break;
+                case 5:
+                    if (upgradeEquipment("Titanium"))
+                    {
+                        miningSpeed -= 8;
+                        drillUpgrades[no] = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
+    public void upgradeArmor(int no)
+    {
+        if (!armorUpgrades[no])
+        {
+            switch (no)
+            {
+                case 0:
+                    if (upgradeEquipment("Copper"))
+                    {
+                        maxHealth += 10;
+                        armorUpgrades[no] = true;
+                    }
+                    break;
+                case 1:
+                    if (upgradeEquipment("Bronze"))
+                    {
+                        maxHealth += 15;
+                        armorUpgrades[no] = true;
+                    }
+                    break;
+                case 2:
+                    if (upgradeEquipment("Iron"))
+                    {
+                        maxHealth += 25;
+                        armorUpgrades[no] = true;
+                    }
+                    break;
+                case 3:
+                    if (upgradeEquipment("Silver"))
+                    {
+                        maxHealth += 25;
+                        armorUpgrades[no] = true;
+                    }
+                    break;
+                case 4:
+                    if (upgradeEquipment("Platinum"))
+                    {
+                        maxHealth += 35;
+                        armorUpgrades[no] = true;
+                    }
+                    break;
+                case 5:
+                    if (upgradeEquipment("Titanium"))
+                    {
+                        maxHealth += 40;
+                        armorUpgrades[no] = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
+    public void upgradeJet(int no)
+    {
+        if (!jetUpgrades[no])
+        {
+            switch (no)
+            {
+                case 0:
+                    if (upgradeEquipment("Copper"))
+                    {
+                        //Do something to movement speed
+                        jetUpgrades[no] = true;
+                    }
+                    break;
+                case 1:
+                    if (upgradeEquipment("Bronze"))
+                    {
+                        //Do something to movement speed
+                        jetUpgrades[no] = true;
+                    }
+                    break;
+                case 2:
+                    if (upgradeEquipment("Iron"))
+                    {
+                        //Do something to movement speed
+                        jetUpgrades[no] = true;
+                    }
+                    break;
+                case 3:
+                    if (upgradeEquipment("Silver"))
+                    {
+                        //Do something to movement speed
+                        jetUpgrades[no] = true;
+                    }
+                    break;
+                case 4:
+                    if (upgradeEquipment("Platinum"))
+                    {
+                        //Do something to movement speed
+                        jetUpgrades[no] = true;
+                    }
+                    break;
+                case 5:
+                    if (upgradeEquipment("Titanium"))
+                    {
+                        //Do something to movement speed
+                        jetUpgrades[no] = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
+    public void upgradeFuel(int no)
+    {
+        if (!fuelUpgrades[no])
+        {
+            switch (no)
+            {
+                case 0:
+                    if (upgradeEquipment("Copper"))
+                    {
+                        maxFuel += 10;
+                        fuelUpgrades[no] = true;
+                    }
+                    break;
+                case 1:
+                    if (upgradeEquipment("Bronze"))
+                    {
+                        maxFuel += 15;
+                        fuelUpgrades[no] = true;
+                    }
+                    break;
+                case 2:
+                    if (upgradeEquipment("Iron"))
+                    {
+                        maxFuel += 25;
+                        fuelUpgrades[no] = true;
+                    }
+                    break;
+                case 3:
+                    if (upgradeEquipment("Silver"))
+                    {
+                        maxFuel += 25;
+                        fuelUpgrades[no] = true;
+                    }
+                    break;
+                case 4:
+                    if (upgradeEquipment("Platinum"))
+                    {
+                        maxFuel += 35;
+                        fuelUpgrades[no] = true;
+                    }
+                    break;
+                case 5:
+                    if (upgradeEquipment("Titanium"))
+                    {
+                        maxFuel += 40;
+                        fuelUpgrades[no] = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
+    public void upgradeWeapon(int no)
+    {
+        if (!weaponUpgrades[no])
+        {
+            switch (no)
+            {
+                case 0:
+                    if (upgradeEquipment("Copper"))
+                    {
+                        //Do something to weapon power
+                        weaponUpgrades[no] = true;
+                    }
+                    break;
+                case 1:
+                    if (upgradeEquipment("Bronze"))
+                    {
+                        //Do something to weapon power
+                        weaponUpgrades[no] = true;
+                    }
+                    break;
+                case 2:
+                    if (upgradeEquipment("Iron"))
+                    {
+                        //Do something to weapon power
+                        weaponUpgrades[no] = true;
+                    }
+                    break;
+                case 3:
+                    if (upgradeEquipment("Silver"))
+                    {
+                        //Do something to weapon power
+                        weaponUpgrades[no] = true;
+                    }
+                    break;
+                case 4:
+                    if (upgradeEquipment("Platinum"))
+                    {
+                        //Do something to weapon power
+                        weaponUpgrades[no] = true;
+                    }
+                    break;
+                case 5:
+                    if (upgradeEquipment("Titanium"))
+                    {
+                        //Do something to weapon power
+                        weaponUpgrades[no] = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
+    public bool[] getDrillUpgrades()
+    {
+        return drillUpgrades;
+    }
+
+    public bool[] getArmorUpgrades()
+    {
+        return armorUpgrades;
+    }
+
+    public bool[] getJetUpgrades()
+    {
+        return jetUpgrades;
+    }
+
+    public bool[] getFuelUpgrades()
+    {
+        return fuelUpgrades;
+    }
+
+    public bool[] getWeaponUpgrades()
+    {
+        return weaponUpgrades;
+    }
+
 }

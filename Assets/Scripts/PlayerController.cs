@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float horisontalSpeed;
     public GameObject bullet;
     public GameObject hpbar;
-    public GameObject moneybar;
+    public GameObject fuelbar;
     public GameObject shopMenu;
     public MineralInventoryPanel inventory;
 
@@ -16,10 +17,15 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private float health;
     private float speed;
-    private int money;
-    private Hashtable bag;
-    private int fuel;
-    private int maxFuel;
+    private float fuel;
+    private float maxFuel;
+
+    //Upgrade variables
+    private bool[] armorUpgrades = { false, false, false, false, false, false };
+    private bool[] fuelUpgrades = { false, false, false, false, false, false };
+    private bool[] jetUpgrades = { false, false, false, false, false, false };
+    private bool[] weaponUpgrades = { false, false, false, false, false, false };
+    private bool[] drillUpgrades = { false, false, false, false, false, false };
 
     //Weapon variables
     private GameObject weapon;
@@ -38,22 +44,55 @@ public class PlayerController : MonoBehaviour
 
     public void refuel()
     {
-        //fuel = maxFuel;
-        print("refueling!!");
+        fuel = maxFuel;
+        fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
     }
 
-    public void upgradeDrill()
+    public void upgradeDrill(int no)
     {
-        miningSpeed -= 5;
+        if (!drillUpgrades[no - 1])
+        {
+            drillUpgrades[no - 1] = true;
+            switch (no)
+            {
+                case 1:
+                    miningSpeed -= 2;
+                    break;
+                case 2:
+                    miningSpeed -= 3;
+                    break;
+                case 3:
+                    miningSpeed -= 5;
+                    break;
+                case 4:
+                    miningSpeed -= 5;
+                    break;
+                case 5:
+                    miningSpeed -= 7;
+                    break;
+                case 6:
+                    miningSpeed -= 8;
+                    break;
+                default:
+                    break;
+            }
+            
+        }   
     }
 
+    public bool[] getDrillUpgrades()
+    {
+        return drillUpgrades;
+    }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         health = 20.0f;
+        fuel = 20.0f;
+        maxFuel = 20.0f;
         hpbar.GetComponent<Text>().text = "HP: " + health.ToString("n2");
-        moneybar.GetComponent<Text>().text = money + "$";
+        fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
 
 
         weapon = GameObject.FindGameObjectWithTag("Weapon");
@@ -124,7 +163,8 @@ public class PlayerController : MonoBehaviour
                     float moveHorizontal = Input.GetAxis("Horizontal");
                     float moveVertical = Input.GetAxis("Vertical");
                     Vector3 movement = new Vector3(0.0f, moveVertical * verticalSpeed, moveHorizontal * horisontalSpeed);
-
+                    fuel = fuel - 0.01f;
+                    fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
                     rb.AddForce(movement);
                     
                 }
@@ -157,7 +197,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+
         weapon.transform.position = gameObject.transform.position + new Vector3(0.0f, 0.35f, 0.0f);
+        if(health <= 0.0f){
+            //Lose stuff from bag
+            //Respawn
+        }
         speed = rb.velocity.y;
         if (rb.position.y > -0.0255f && rb.position.y < -0.0245f && rb.position.z <= 3.5f && rb.position.z >= 2.5f)
         {
@@ -253,7 +298,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (speed < -5.0f)
+        if (speed < -5.0f && BlockIsBelow(collision.gameObject.transform.position, gameObject.transform.position))
         {
             health += speed / 2.0f;
             hpbar.GetComponent<Text>().text = "HP: " + health.ToString("n2") + "  ";

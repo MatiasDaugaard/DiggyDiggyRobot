@@ -14,6 +14,13 @@ public class ShopMenu : MonoBehaviour
     public Button refuelButton;
     public Button leaveButton;
 
+    public Button firstUpgrade;
+    public Button secondUpgrade;
+    public Button thirdUpgrade;
+    public Button fourthUpgrade;
+    public Button fifthUpgrade;
+    public Button sixthUpgrade;
+
     void Start()
     {
         drillButton.GetComponentInChildren<Text>().text = "Upgrade Drill";
@@ -36,7 +43,8 @@ public class ShopMenu : MonoBehaviour
 
     void DrillOnClick()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().upgradeDrill();
+        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().getDrillUpgrades();
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().upgradeDrill();
     }
 
     void ArmorOnClick()

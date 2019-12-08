@@ -13675,7 +13675,7 @@ MonoBehaviour:
   horisontalSpeed: 8
   bullet: {fileID: 2875008053301524045, guid: 27d14439aabcc4b2fb93e9cc921c4cce, type: 3}
   hpbar: {fileID: 117201281}
-  moneybar: {fileID: 1798690974}
+  fuelbar: {fileID: 1798690974}
   shopMenu: {fileID: 14118975}
   inventory: {fileID: 1386995004}
 --- !u!1 &573487663
@@ -46329,7 +46329,7 @@ GameObject:
   - component: {fileID: 1798690977}
   - component: {fileID: 1798690976}
   m_Layer: 5
-  m_Name: Money
+  m_Name: Fuel
   m_TagString: MoneyBar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

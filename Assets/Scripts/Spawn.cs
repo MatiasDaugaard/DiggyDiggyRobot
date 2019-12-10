@@ -5,7 +5,9 @@ using UnityEngine;
 public class Spawn : MonoBehaviour
 {
     [SerializeField]
-    private GameObject wall;
+    private GameObject groundWall;
+    [SerializeField]
+    private GameObject airWall;
     [SerializeField]
     private List<MineralCluster> clusters;
 
@@ -67,23 +69,43 @@ public class Spawn : MonoBehaviour
         }
 
         // Generate walls
-        GameObject westWall = Instantiate(wall);
+        GameObject westWall = Instantiate(groundWall);
         Transform westTrans = westWall.transform;
         westTrans.parent = transform;
-        westTrans.position = new Vector3(0.25f, -0.5f * (height+1) / 2, -0.5f * (width+1) / 2);
-        westTrans.localScale = new Vector3(westTrans.localScale.x, (height+1) / 2, westTrans.localScale.z);
+        westTrans.position = new Vector3(0.25f, -0.5f * (height+1f) / 2f, -0.5f * (width+1f) / 2f);
+        westTrans.localScale = new Vector3(westTrans.localScale.x, height / 2f, westTrans.localScale.z);
 
-        GameObject eastWall = Instantiate(wall);
+        GameObject eastWall = Instantiate(groundWall);
         Transform eastTrans = eastWall.transform;
         eastTrans.parent = transform;
-        eastTrans.position = new Vector3(0.25f, -0.5f * (height + 1) / 2, 0.5f * (width + 1) / 2);
-        eastTrans.localScale = new Vector3(eastTrans.localScale.x, (height + 1) / 2, eastTrans.localScale.z);
+        eastTrans.position = new Vector3(0.25f, -0.5f * (height + 1f) / 2f, 0.5f * (width + 1) / 2);
+        eastTrans.localScale = new Vector3(eastTrans.localScale.x, height / 2f, eastTrans.localScale.z);
 
-        GameObject southWall = Instantiate(wall);
+        GameObject southWall = Instantiate(groundWall);
         Transform southTrans = southWall.transform;
         southTrans.parent = transform;
         southTrans.position = new Vector3(0.25f, -0.5f * (height+1), 0f);
-        southTrans.localScale = new Vector3(southTrans.localScale.x, southTrans.localScale.y, (width + 2f) / 2);
+        southTrans.localScale = new Vector3(southTrans.localScale.x, southTrans.localScale.y, (width + 2f) / 2f);
+
+        int airHeight = 30;
+
+        GameObject airWestWall = Instantiate(airWall);
+        Transform airWestTrans = airWestWall.transform;
+        airWestTrans.parent = transform;
+        airWestTrans.position = new Vector3(0.25f, 0.5f * airHeight / 2f, -0.5f * (width + 1f) / 2f);
+        airWestTrans.localScale = new Vector3(airWestTrans.localScale.x, (airHeight + 1f) / 2f, airWestTrans.localScale.z);
+
+        GameObject airEastWall = Instantiate(airWall);
+        Transform airEastTrans = airEastWall.transform;
+        airEastTrans.parent = transform;
+        airEastTrans.position = new Vector3(0.25f, 0.5f * airHeight / 2f, 0.5f * (width + 1f) / 2f);
+        airEastTrans.localScale = new Vector3(airEastTrans.localScale.x, (airHeight + 1f) / 2f, airEastTrans.localScale.z);
+
+        GameObject northWall = Instantiate(airWall);
+        Transform northTrans = northWall.transform;
+        northTrans.parent = transform;
+        northTrans.position = new Vector3(0.25f, 0.5f * (airHeight + 1), 0f);
+        northTrans.localScale = new Vector3(northTrans.localScale.x, northTrans.localScale.y, (width + 2f) / 2f);
     }
 
     private void AddCluster(MineralType[,] world, MineralType mineral, Vector2 location, float probability, float decay, int min, int max)

@@ -11,6 +11,7 @@ TagManager:
   - HPBar
   - MoneyBar
   - ShopMenu
+  - Cave
   layers:
   - Default
   - TransparentFX

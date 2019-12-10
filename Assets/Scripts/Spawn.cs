@@ -19,7 +19,7 @@ public class Spawn : MonoBehaviour
         var map = new Dictionary<MineralType, GameObject>();
         foreach (MineralCluster cluster in clusters)
         {
-            map.Add(cluster.Type, cluster.Block);
+            map[cluster.Type] = cluster.Block;
         }
 
         // Generate matrix

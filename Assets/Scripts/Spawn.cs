@@ -5,6 +5,8 @@ using UnityEngine;
 public class Spawn : MonoBehaviour
 {
     [SerializeField]
+    private GameObject wall;
+    [SerializeField]
     private List<MineralCluster> clusters;
 
     public void GenerateWorld()
@@ -59,10 +61,29 @@ public class Spawn : MonoBehaviour
                 int blockY = y - height;
                 int blockZ = z - width / 2;
                 map.TryGetValue(blockType, out block);
-                Vector3 position = new Vector3(0.25f, 0.5f * blockY, blockZ * 0.5f);
+                Vector3 position = new Vector3(0.25f, 0.5f * blockY, 0.5f * blockZ);
                 AddBlock(block, position);
             }
         }
+
+        // Generate walls
+        GameObject westWall = Instantiate(wall);
+        Transform westTrans = westWall.transform;
+        westTrans.parent = transform;
+        westTrans.position = new Vector3(0.25f, -0.5f * (height+1) / 2, -0.5f * (width+1) / 2);
+        westTrans.localScale = new Vector3(westTrans.localScale.x, (height+1) / 2, westTrans.localScale.z);
+
+        GameObject eastWall = Instantiate(wall);
+        Transform eastTrans = eastWall.transform;
+        eastTrans.parent = transform;
+        eastTrans.position = new Vector3(0.25f, -0.5f * (height + 1) / 2, 0.5f * (width + 1) / 2);
+        eastTrans.localScale = new Vector3(eastTrans.localScale.x, (height + 1) / 2, eastTrans.localScale.z);
+
+        GameObject southWall = Instantiate(wall);
+        Transform southTrans = southWall.transform;
+        southTrans.parent = transform;
+        southTrans.position = new Vector3(0.25f, -0.5f * (height+1), 0f);
+        southTrans.localScale = new Vector3(southTrans.localScale.x, southTrans.localScale.y, (width + 2f) / 2);
     }
 
     private void AddCluster(MineralType[,] world, MineralType mineral, Vector2 location, float probability, float decay, int min, int max)

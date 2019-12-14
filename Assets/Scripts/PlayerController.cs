@@ -125,13 +125,13 @@ public class PlayerController : MonoBehaviour
                 {
                     GameObject bulletInstance = Instantiate(bullet);
                     bulletInstance.transform.position = weapon.transform.position + new Vector3(0.0f, 0.0f, 0.225f);
-                    bulletInstance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 0.0f, 2000.0f));
+                    bulletInstance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 0.0f, 1000.0f));
                 }
                 else if (Input.GetKeyDown(KeyCode.A) && weapon.activeSelf)
                 {
                     GameObject bulletInstance = Instantiate(bullet);
                     bulletInstance.transform.position = weapon.transform.position + new Vector3(0.0f, 0.0f, -0.225f);
-                    bulletInstance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 0.0f, -2000.0f));
+                    bulletInstance.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 0.0f, -1000.0f));
                 }
             }
         }
@@ -163,7 +163,8 @@ public class PlayerController : MonoBehaviour
 
     private void StartMining(GameObject block, char dir)
     {
-        if (!weapon.activeSelf)
+        
+        if (!weapon.activeSelf && block.tag != "Solid")
         {
             timer = System.DateTimeOffset.Now.ToUnixTimeMilliseconds();
             blockBeingMined = block.GetComponent<Mineral>();
@@ -233,8 +234,10 @@ public class PlayerController : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
+                
                 if (BlockIsLeft(blockPos, playerPos) && BlockIsSameLevel(blockPos, playerPos) && !PlayerIsFlying(blockPos, playerPos))
                 {
+                    
                     StartMining(collision.gameObject, 'L');
                 }
             }
@@ -275,5 +278,13 @@ public class PlayerController : MonoBehaviour
     public Player Player()
     {
         return player;
+    }
+
+    public GameObject mob;
+
+    public void SpawnMob()
+    {
+        GameObject mob1 = Instantiate(mob);
+        mob1.SetActive(true);
     }
 }

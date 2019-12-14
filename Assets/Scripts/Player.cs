@@ -33,6 +33,17 @@ public class Player
 
     }
 
+    public void Damage(float dmg)
+    {
+        health -= dmg;
+        pc.UpdateHealthBar();
+        if(health <= 0.0f)
+        {
+            //Die();
+        }
+    }
+
+
     public void Refuel()
     {
         fuel = maxFuel;

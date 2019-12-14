@@ -15,19 +15,16 @@ public class BulletController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(gameObject.transform.position.z < -25.0f || gameObject.transform.position.z > 25.0f || (rb.velocity.z < 0.5f && rb.velocity.z > -0.5f))
-        {
-            gameObject.SetActive(false);
-            Destroy(gameObject);
-        }
+        
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Solid")
         {
-            //Damage Enemy
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
+
+
 }

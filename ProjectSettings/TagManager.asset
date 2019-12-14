@@ -12,6 +12,8 @@ TagManager:
   - MoneyBar
   - ShopMenu
   - Cave
+  - Solid
+  - Mob
   layers:
   - Default
   - TransparentFX

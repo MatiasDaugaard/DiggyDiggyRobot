@@ -122,31 +122,32 @@ public class ShopMenu : MonoBehaviour
     private void UpgradeOnClick(int no, string equipment)
     {
         bool[] upgrades = { };
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Player();
         switch (equipment)
         {
             case "Drill":
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().UpgradeDrill(no);
-                upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetDrillUpgrades();
+                player.UpgradeDrill(no);
+                upgrades = player.GetDrillUpgrades();
                 Upgrade(upgrades, "Drill");
                 break;
             case "Armor":
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().UpgradeArmor(no);
-                upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetArmorUpgrades();
+                player.UpgradeArmor(no);
+                upgrades = player.GetArmorUpgrades();
                 Upgrade(upgrades, "Armor");
                 break;
             case "Jet":
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().UpgradeJet(no);
-                upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetJetUpgrades();
+                player.UpgradeJet(no);
+                upgrades = player.GetJetUpgrades();
                 Upgrade(upgrades, "Jet");
                 break;
             case "Fuel":
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().UpgradeFuel(no);
-                upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetFuelUpgrades();
+                player.UpgradeFuel(no);
+                upgrades = player.GetFuelUpgrades();
                 Upgrade(upgrades, "Fuel");
                 break;
             case "Weapon":
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().UpgradeWeapon(no);
-                upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetWeaponUpgrades();
+                player.UpgradeWeapon(no);
+                upgrades = player.GetWeaponUpgrades();
                 Upgrade(upgrades, "Weapon");
                 break;
             default:
@@ -177,31 +178,31 @@ public class ShopMenu : MonoBehaviour
 
     void DrillOnClick()
     {
-        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetDrillUpgrades();
+        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Player().GetDrillUpgrades();
         Upgrade(upgrades, "Drill");
     }
 
     void ArmorOnClick()
     {
-        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetArmorUpgrades();
+        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Player().GetArmorUpgrades();
         Upgrade(upgrades, "Armor");
     }
 
     void JetOnClick()
     {
-        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetJetUpgrades();
+        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Player().GetJetUpgrades();
         Upgrade(upgrades, "Jet");
     }
 
     void FuelOnClick()
     {
-        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetFuelUpgrades();
+        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Player().GetFuelUpgrades();
         Upgrade(upgrades, "Fuel");
     }
 
     void WeaponOnClick()
     {
-        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetWeaponUpgrades();
+        bool[] upgrades = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Player().GetWeaponUpgrades();
         Upgrade(upgrades, "Weapon");
     }
 

@@ -11,27 +11,14 @@ public class PlayerController : MonoBehaviour
     public GameObject hpbar;
     public GameObject fuelbar;
     public GameObject shopMenu;
-    public MineralInventoryPanel inventory;
+    public MineralInventoryPanel inventory; //Maybe move to player class
 
-    //Player variables
+    
     private Rigidbody rb;
-    private float health;
-    private float maxHealth;
-    private float speed;
-    private float speedMultiplier;
-    private float fuel;
-    private float maxFuel;
-
-    //Equipment variables
-    private bool[] armorUpgrades = { false, false, false, false, false, false };
-    private bool[] fuelUpgrades = { false, false, false, false, false, false };
-    private bool[] jetUpgrades = { false, false, false, false, false, false };
-    private bool[] weaponUpgrades = { false, false, false, false, false, false };
-    private bool[] drillUpgrades = { false, false, false, false, false, false };
-
-    //Weapon variables
+    private Player player;
+    private float impactSpeed; 
     private GameObject weapon;
-    private float weaponDamage;
+    
 
     //Mining Variables
     private Mineral blockBeingMined;
@@ -42,19 +29,14 @@ public class PlayerController : MonoBehaviour
     private float disappearingsRate;
     private float miningDistanceY;
     private float miningDistanceZ;
-    private int miningSpeed;
+    
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        health = 20.0f;
-        maxHealth = 20.0f;
-        fuel = 20.0f;
-        maxFuel = 20.0f;
-        speedMultiplier = 1.0f;
-        weaponDamage = 5.0f;
-        hpbar.GetComponent<Text>().text = "HP: " + health.ToString("n2") + "/" + (int)maxHealth;
-        fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
+        player = new Player(this);
+        UpdateHealthBar();
+        UpdateFuelBar();
 
 
         weapon = GameObject.FindGameObjectWithTag("Weapon");
@@ -65,9 +47,7 @@ public class PlayerController : MonoBehaviour
         mineCount = 0;
         miningDistanceY = 0.0f;
         miningDistanceZ = 0.0f;
-        miningSpeed = 40;
-
-        UpdateMining(miningSpeed);
+        UpdateMining(player.miningSpeed);
 
     }
 
@@ -125,9 +105,9 @@ public class PlayerController : MonoBehaviour
                     float moveHorizontal = Input.GetAxis("Horizontal");
                     float moveVertical = Input.GetAxis("Vertical");
                     Vector3 movement = new Vector3(0.0f, moveVertical * verticalSpeed, moveHorizontal * horisontalSpeed);
-                    fuel = fuel - 0.01f;
-                    fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
-                    rb.AddForce(movement*speedMultiplier);
+                    player.Move(); 
+                    UpdateFuelBar();
+                    rb.AddForce(movement* player.speedMultiplier);
                     
                 }
                 if (Input.GetKeyDown(KeyCode.W))
@@ -161,14 +141,14 @@ public class PlayerController : MonoBehaviour
     {
 
         weapon.transform.position = gameObject.transform.position + new Vector3(0.0f, 0.35f, 0.0f);
-        if(health <= 0.0f){
+        if(player.health <= 0.0f){
             //Lose stuff from bag
             //Respawn
         }
-        if(fuel <= 0.0f){
+        if(player.fuel <= 0.0f){
             //DIE??
         }
-        speed = rb.velocity.y;
+        impactSpeed = rb.velocity.y;
         if (rb.position.y > -0.0255f && rb.position.y < -0.0245f && rb.position.z <= 3.5f && rb.position.z >= 2.5f)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -197,7 +177,7 @@ public class PlayerController : MonoBehaviour
             }
 
             miningDistanceZ = (block.transform.position.z - rb.transform.position.z) / mineCountMax;
-            UpdateMining((int)(miningSpeed + ((-1.0f * block.transform.position.y) / 5)));
+            UpdateMining((int)(player.miningSpeed + ((-1.0f * block.transform.position.y) / 5)));
         }
     }
 
@@ -263,10 +243,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (speed < -5.0f && BlockIsBelow(collision.gameObject.transform.position, gameObject.transform.position))
+        if (impactSpeed < -5.0f && BlockIsBelow(collision.gameObject.transform.position, gameObject.transform.position))
         {
-            health += speed / 2.0f;
-            hpbar.GetComponent<Text>().text = "HP: " + health.ToString("n2") + "  ";
+            player.health += impactSpeed / 2.0f;
+            UpdateHealthBar();
         }
         OnCollision(collision);
     }
@@ -278,370 +258,22 @@ public class PlayerController : MonoBehaviour
 
     public void Refuel()
     {
-        fuel = maxFuel;
-        fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
+        player.Refuel();
+        UpdateFuelBar();
     }
 
-    private bool UpgradeEquipment(string upgrade)
+    public void UpdateFuelBar()
     {
-        switch (upgrade)
-        {
-            case "Copper":
-                if (inventory.Get(MineralType.Copper) >= 10)
-                {
-                    inventory.Remove(MineralType.Copper, 10);
-                    return true;
-                }
-                return false;
-            case "Bronze":
-                if (inventory.Get(MineralType.Copper) >= 15 && inventory.Get(MineralType.Iron) >= 5)
-                {
-                    inventory.Remove(MineralType.Copper, 15);
-                    inventory.Remove(MineralType.Iron, 5);
-                    return true;
-                }
-                return false;
-
-            case "Iron":
-                if (inventory.Get(MineralType.Copper) >= 5 && inventory.Get(MineralType.Iron) >= 20)
-                {
-                    inventory.Remove(MineralType.Copper, 5);
-                    inventory.Remove(MineralType.Iron, 20);
-                    return true;
-                }
-                return false;
-
-            case "Silver":
-                if (inventory.Get(MineralType.Iron) >= 25 && inventory.Get(MineralType.Titanium) >= 5)
-                {
-                    inventory.Remove(MineralType.Iron, 25);
-                    inventory.Remove(MineralType.Titanium, 5);
-                    return true;
-                }
-                return false;
-
-            case "Platinum":
-                if (inventory.Get(MineralType.Copper) >= 10 && inventory.Get(MineralType.Iron) >= 15 && inventory.Get(MineralType.Titanium) >= 20)
-                {
-                    inventory.Remove(MineralType.Copper, 10);
-                    inventory.Remove(MineralType.Iron, 15);
-                    inventory.Remove(MineralType.Titanium, 20);
-                    return true;
-                }
-                return false;
-
-            case "Titanium":
-                if (inventory.Get(MineralType.Titanium) >= 100)
-                {
-                    inventory.Remove(MineralType.Titanium, 100);
-                    return true;
-                }
-                return false;
-            default:
-                return false;
-        }
+        fuelbar.GetComponent<Text>().text = "Litre: " + (int)player.fuel + "/" + (int)player.maxFuel;
     }
 
-    public void UpgradeDrill(int no)
+    public void UpdateHealthBar()
     {
-        if (!drillUpgrades[no])
-        {
-            switch (no)
-            {
-                case 0:
-                    if (UpgradeEquipment("Copper"))
-                    {
-                        miningSpeed -= 2;
-                        drillUpgrades[no] = true;
-                    }
-                    break;
-                case 1:
-                    if (UpgradeEquipment("Bronze"))
-                    {
-                        miningSpeed -= 3;
-                        drillUpgrades[no] = true;
-                    }
-                    break;
-                case 2:
-                    if (UpgradeEquipment("Iron"))
-                    {
-                        miningSpeed -= 5;
-                        drillUpgrades[no] = true;
-                    }
-                    break;
-                case 3:
-                    if (UpgradeEquipment("Silver"))
-                    {
-                        miningSpeed -= 5;
-                        drillUpgrades[no] = true;
-                    }
-                    break;
-                case 4:
-                    if (UpgradeEquipment("Platinum"))
-                    {
-                        miningSpeed -= 7;
-                        drillUpgrades[no] = true;
-                    }
-                    break;
-                case 5:
-                    if (UpgradeEquipment("Titanium"))
-                    {
-                        miningSpeed -= 8;
-                        drillUpgrades[no] = true;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-        }
+        hpbar.GetComponent<Text>().text = "HP: " + player.health.ToString("n2") + "  ";
     }
 
-    public void UpgradeArmor(int no)
+    public Player Player()
     {
-        if (!armorUpgrades[no])
-        {
-            switch (no)
-            {
-                case 0:
-                    if (UpgradeEquipment("Copper"))
-                    {
-                        maxHealth += 10;
-                        armorUpgrades[no] = true;
-                    }
-                    break;
-                case 1:
-                    if (UpgradeEquipment("Bronze"))
-                    {
-                        maxHealth += 15;
-                        armorUpgrades[no] = true;
-                    }
-                    break;
-                case 2:
-                    if (UpgradeEquipment("Iron"))
-                    {
-                        maxHealth += 25;
-                        armorUpgrades[no] = true;
-                    }
-                    break;
-                case 3:
-                    if (UpgradeEquipment("Silver"))
-                    {
-                        maxHealth += 25;
-                        armorUpgrades[no] = true;
-                    }
-                    break;
-                case 4:
-                    if (UpgradeEquipment("Platinum"))
-                    {
-                        maxHealth += 35;
-                        armorUpgrades[no] = true;
-                    }
-                    break;
-                case 5:
-                    if (UpgradeEquipment("Titanium"))
-                    {
-                        maxHealth += 40;
-                        armorUpgrades[no] = true;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            hpbar.GetComponent<Text>().text = "HP: " + health.ToString("n2") + "/" + (int)maxHealth;
-
-        }
+        return player;
     }
-
-    public void UpgradeJet(int no)
-    {
-        if (!jetUpgrades[no])
-        {
-            switch (no)
-            {
-                case 0:
-                    if (UpgradeEquipment("Copper"))
-                    {
-                        speedMultiplier += 0.1f;
-                        jetUpgrades[no] = true;
-                    }
-                    break;
-                case 1:
-                    if (UpgradeEquipment("Bronze"))
-                    {
-                        speedMultiplier += 0.15f;
-                        jetUpgrades[no] = true;
-                    }
-                    break;
-                case 2:
-                    if (UpgradeEquipment("Iron"))
-                    {
-                        speedMultiplier += 0.2f;
-                        jetUpgrades[no] = true;
-                    }
-                    break;
-                case 3:
-                    if (UpgradeEquipment("Silver"))
-                    {
-                        speedMultiplier += 0.25f;
-                        jetUpgrades[no] = true;
-                    }
-                    break;
-                case 4:
-                    if (UpgradeEquipment("Platinum"))
-                    {
-                        speedMultiplier += 0.3f;
-                        jetUpgrades[no] = true;
-                    }
-                    break;
-                case 5:
-                    if (UpgradeEquipment("Titanium"))
-                    {
-                        speedMultiplier += 0.5f;
-                        jetUpgrades[no] = true;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-        }
-    }
-
-    public void UpgradeFuel(int no)
-    {
-        if (!fuelUpgrades[no])
-        {
-            switch (no)
-            {
-                case 0:
-                    if (UpgradeEquipment("Copper"))
-                    {
-                        maxFuel += 10;
-                        fuelUpgrades[no] = true;
-                    }
-                    break;
-                case 1:
-                    if (UpgradeEquipment("Bronze"))
-                    {
-                        maxFuel += 15;
-                        fuelUpgrades[no] = true;
-                    }
-                    break;
-                case 2:
-                    if (UpgradeEquipment("Iron"))
-                    {
-                        maxFuel += 25;
-                        fuelUpgrades[no] = true;
-                    }
-                    break;
-                case 3:
-                    if (UpgradeEquipment("Silver"))
-                    {
-                        maxFuel += 25;
-                        fuelUpgrades[no] = true;
-                    }
-                    break;
-                case 4:
-                    if (UpgradeEquipment("Platinum"))
-                    {
-                        maxFuel += 35;
-                        fuelUpgrades[no] = true;
-                    }
-                    break;
-                case 5:
-                    if (UpgradeEquipment("Titanium"))
-                    {
-                        maxFuel += 40;
-                        fuelUpgrades[no] = true;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            fuelbar.GetComponent<Text>().text = "Litre: " + (int)fuel + "/" + (int)maxFuel;
-
-        }
-    }
-
-    public void UpgradeWeapon(int no)
-    {
-        if (!weaponUpgrades[no])
-        {
-            switch (no)
-            {
-                case 0:
-                    if (UpgradeEquipment("Copper"))
-                    {
-                        weaponDamage += 2;
-                        weaponUpgrades[no] = true;
-                    }
-                    break;
-                case 1:
-                    if (UpgradeEquipment("Bronze"))
-                    {
-                        weaponDamage += 3;
-                        weaponUpgrades[no] = true;
-                    }
-                    break;
-                case 2:
-                    if (UpgradeEquipment("Iron"))
-                    {
-                        weaponDamage += 3;
-                        weaponUpgrades[no] = true;
-                    }
-                    break;
-                case 3:
-                    if (UpgradeEquipment("Silver"))
-                    {
-                        weaponDamage += 5;
-                        weaponUpgrades[no] = true;
-                    }
-                    break;
-                case 4:
-                    if (UpgradeEquipment("Platinum"))
-                    {
-                        weaponDamage += 5;
-                        weaponUpgrades[no] = true;
-                    }
-                    break;
-                case 5:
-                    if (UpgradeEquipment("Titanium"))
-                    {
-                        weaponDamage += 7;
-                        weaponUpgrades[no] = true;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-        }
-    }
-
-    public bool[] GetDrillUpgrades()
-    {
-        return drillUpgrades;
-    }
-
-    public bool[] GetArmorUpgrades()
-    {
-        return armorUpgrades;
-    }
-
-    public bool[] GetJetUpgrades()
-    {
-        return jetUpgrades;
-    }
-
-    public bool[] GetFuelUpgrades()
-    {
-        return fuelUpgrades;
-    }
-
-    public bool[] GetWeaponUpgrades()
-    {
-        return weaponUpgrades;
-    }
-
 }

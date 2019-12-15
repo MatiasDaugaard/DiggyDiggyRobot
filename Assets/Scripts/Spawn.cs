@@ -11,6 +11,11 @@ public class Spawn : MonoBehaviour
     [SerializeField]
     private List<MineralCluster> clusters;
 
+    public MineralType[,] World
+    {
+        get { return null; }
+    }
+
     public void GenerateWorld()
     {
         // Cleanup

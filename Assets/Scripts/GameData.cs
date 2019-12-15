@@ -36,8 +36,6 @@ public class GameData
 
         data.Position = player.transform.position;
 
-        Debug.Log(player.transform.position);
-
         // Serialize data
         BinaryFormatter formatter = new BinaryFormatter();
         using (FileStream stream = File.Create(Path))
@@ -57,8 +55,10 @@ public class GameData
         }
 
         // Restore game state
-        Vector3 position = data.Position;
-        Debug.Log(position);
+        GameObject spawner = GameObject.FindGameObjectWithTag("Spawner");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        player.transform.position = data.Position;
     }
 
 }

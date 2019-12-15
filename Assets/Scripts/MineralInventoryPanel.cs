@@ -16,12 +16,19 @@ public class MineralInventoryPanel : MonoBehaviour
     {
         panels = new Dictionary<MineralType, MineralPanel>();
         inventory = new Dictionary<MineralType, int>();
+
+        int count = 0;
         foreach (MineralPanelData mineral in minerals)
         {
             MineralPanel panel = Instantiate(template, transform);
+            var rect = panel.GetComponent<RectTransform>();
+            Vector3 pos = rect.position;
+            float width = rect.sizeDelta.x;
+            rect.position = new Vector3(pos.x + width * count, pos.y, pos.z);
             inventory[mineral.Type] = 0;
             panels[mineral.Type] = panel;
             panel.Init(mineral);
+            count++;
         }
     }
 

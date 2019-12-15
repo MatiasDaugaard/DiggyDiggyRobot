@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public GameObject fuelbar;
     public GameObject shopMenu;
     public MineralInventoryPanel inventory; //Maybe move to player class
+    public Spawn spawn;
 
     
     private Rigidbody rb;
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour
             if (mineCount == mineCountMax)
             {
                 AddInventory(blockBeingMined);
+                spawn.RemoveBlock(blockBeingMined);
                 blockBeingMined.gameObject.SetActive(false);
                 blockBeingMined = null;
                 mineCount = 0;

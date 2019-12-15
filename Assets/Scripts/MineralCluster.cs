@@ -7,12 +7,12 @@ using UnityEngine.UI;
 [CreateAssetMenu]
 public class MineralCluster : ScriptableObject
 {
-    public GameObject Block {
+    public Mineral Block {
         get { return block; }
     }
 
     public MineralType Type {
-        get { return Block.GetComponent<Mineral>().Type; }
+        get { return Block.Type; }
     }
 
     public string Name {
@@ -40,7 +40,7 @@ public class MineralCluster : ScriptableObject
     }
 
     [SerializeField]
-    private GameObject block;
+    private Mineral block;
     [SerializeField]
     private int amount;
     [SerializeField]

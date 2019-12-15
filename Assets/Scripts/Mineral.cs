@@ -15,12 +15,21 @@ public enum MineralType
 [Serializable]
 public class Mineral : MonoBehaviour
 {
-    public MineralType Type {
+    [SerializeField]
+    private MineralType type;
+    [SerializeField]
+    private int[] location;
+
+    public MineralType Type
+    {
         get { return type; }
     }
 
-    [SerializeField]
-    private MineralType type;
+    public int[] Location
+    {
+        get { return location; }
+        set { location = value; }
+    }
 
 }
 

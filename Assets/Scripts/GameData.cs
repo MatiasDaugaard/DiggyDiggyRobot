@@ -7,7 +7,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 [System.Serializable]
 public class GameData
 {
-    float[] position;
+    private float[] position;
+    private MineralType[,] world;
 
     public Vector3 Position
     {
@@ -31,10 +32,11 @@ public class GameData
     {
         // Collect game data
         GameData data = new GameData();
-        GameObject spawner = GameObject.FindGameObjectWithTag("Spawner");
+        Spawn spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawn>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         data.Position = player.transform.position;
+        data.world = spawner.World;
 
         // Serialize data
         BinaryFormatter formatter = new BinaryFormatter();
@@ -55,10 +57,12 @@ public class GameData
         }
 
         // Restore game state
-        GameObject spawner = GameObject.FindGameObjectWithTag("Spawner");
+        Spawn spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawn>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         player.transform.position = data.Position;
+        spawner.LoadWorld(data.world);
+
     }
 
 }

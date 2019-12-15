@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a369d0c7824d8429107391a5834ec3, type: 3}
   m_Name: CopperCluster
   m_EditorClassIdentifier: 
-  block: {fileID: 4268780592918661865, guid: 640d6bb37a3db334992c1d0a3e3b344f, type: 3}
+  block: {fileID: 5735991723676545747, guid: 640d6bb37a3db334992c1d0a3e3b344f, type: 3}
   amount: 60
   probability: 1.1
   decay: 0.3

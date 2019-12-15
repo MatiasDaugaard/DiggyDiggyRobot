@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a369d0c7824d8429107391a5834ec3, type: 3}
   m_Name: CaveCluster
   m_EditorClassIdentifier: 
-  block: {fileID: 5524501056781901991, guid: 4defe7f42e32c2249aae03bb34c7d95e, type: 3}
+  block: {fileID: 4039006697038862493, guid: 4defe7f42e32c2249aae03bb34c7d95e, type: 3}
   amount: 10
   probability: 3
   decay: 0.8

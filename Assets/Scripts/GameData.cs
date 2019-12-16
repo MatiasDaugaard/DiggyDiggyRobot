@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class GameData
 {
     private float[] position;
+    private float[] speed;
     private MineralType[,] world;
 
     public Vector3 Position
@@ -34,8 +35,12 @@ public class GameData
         GameData data = new GameData();
         Spawn spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawn>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        PlayerController controller = player.GetComponent<PlayerController>();
 
         data.Position = player.transform.position;
+        data.speed = new float[2];
+        data.speed[0] = controller.horisontalSpeed;
+        data.speed[1] = controller.verticalSpeed;
         data.world = spawner.World;
 
         // Serialize data
@@ -59,8 +64,11 @@ public class GameData
         // Restore game state
         Spawn spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawn>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        PlayerController controller = player.GetComponent<PlayerController>();
 
         player.transform.position = data.Position;
+        controller.horisontalSpeed = data.speed[0];
+        controller.verticalSpeed = data.speed[1];
         spawner.LoadWorld(data.world);
 
     }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: CopperPanel
   m_EditorClassIdentifier: 
   type: 3
-  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 5dc29460857c0427089685f294f6b6a2, type: 3}

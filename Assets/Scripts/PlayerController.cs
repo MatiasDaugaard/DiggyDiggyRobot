@@ -30,7 +30,12 @@ public class PlayerController : MonoBehaviour
     private float disappearingsRate;
     private float miningDistanceY;
     private float miningDistanceZ;
-    
+
+
+    public Player Player
+    {
+        get { return player; }
+    }
 
     private void Start()
     {
@@ -281,11 +286,6 @@ public class PlayerController : MonoBehaviour
     public void UpdateHealthBar()
     {
         hpbar.GetComponent<Text>().text = "HP: " + player.health.ToString("n2") + "  ";
-    }
-
-    public Player Player()
-    {
-        return player;
     }
 
     public GameObject mob;

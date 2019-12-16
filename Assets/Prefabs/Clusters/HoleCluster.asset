@@ -17,4 +17,4 @@ MonoBehaviour:
   probability: 1
   decay: 0.2
   minDepth: 5
-  maxDepth: 120
+  maxDepth: 115

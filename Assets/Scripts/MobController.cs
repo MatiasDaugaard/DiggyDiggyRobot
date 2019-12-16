@@ -56,7 +56,7 @@ public class MobController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         GameObject obj = collision.gameObject;
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Player();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Player;
         if (obj.tag == "Bullet")
         {
             Damage(player.weaponDamage);

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: IronPanel
   m_EditorClassIdentifier: 
   type: 4
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: b7cdadf6476894804886b6498d14c495, type: 3}

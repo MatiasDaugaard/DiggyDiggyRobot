@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CopperCluster
   m_EditorClassIdentifier: 
   block: {fileID: 5735991723676545747, guid: 640d6bb37a3db334992c1d0a3e3b344f, type: 3}
-  amount: 60
-  probability: 1.1
-  decay: 0.3
+  amount: 200
+  probability: 1
+  decay: 0.35
   minDepth: 5
   maxDepth: 50

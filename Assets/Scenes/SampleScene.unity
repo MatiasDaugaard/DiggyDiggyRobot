@@ -3999,6 +3999,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c1a81f16bd74e0d9ac41ae6bbc763d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  width: 101
+  height: 120
   groundWall: {fileID: 1899064319125812531, guid: bb5c018aa7595c94a8b369fb01c1b51b,
     type: 3}
   airWall: {fileID: 7974340477098686618, guid: aeda620387c86d64fb1141a76bafa244, type: 3}
@@ -4008,6 +4010,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee70bd378cf92f24798ad40a4ddd9737, type: 2}
   - {fileID: 11400000, guid: dd20a6be3207b4b4684fd0f097a9e745, type: 2}
   - {fileID: 11400000, guid: e8e86345898590945b94867d3eee2ab0, type: 2}
+  - {fileID: 11400000, guid: da4e4d746fa434703afa7b428f74fe9b, type: 2}
+  - {fileID: 11400000, guid: ce21f520f511b4d21907ba1de0750caf, type: 2}
 --- !u!4 &1614070465
 Transform:
   m_ObjectHideFlags: 0

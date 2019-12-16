@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39a369d0c7824d8429107391a5834ec3, type: 3}
-  m_Name: New Mineral Cluster
+  m_Name: SolidCluster
   m_EditorClassIdentifier: 
-  block: {fileID: 0}
+  block: {fileID: 7997622935796927753, guid: bb5c018aa7595c94a8b369fb01c1b51b, type: 3}
   amount: 0
   probability: 0
   decay: 0

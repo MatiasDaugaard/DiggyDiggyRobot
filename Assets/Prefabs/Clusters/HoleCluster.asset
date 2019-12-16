@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: HoleCluster
   m_EditorClassIdentifier: 
   block: {fileID: 4039006697038862493, guid: 4defe7f42e32c2249aae03bb34c7d95e, type: 3}
-  amount: 100
+  amount: 500
   probability: 1
-  decay: 0.1
+  decay: 0.2
   minDepth: 5
-  maxDepth: 95
+  maxDepth: 120

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39a369d0c7824d8429107391a5834ec3, type: 3}
-  m_Name: CaveCluster
+  m_Name: TitaniumCluster
   m_EditorClassIdentifier: 
-  block: {fileID: 4039006697038862493, guid: 4defe7f42e32c2249aae03bb34c7d95e, type: 3}
-  amount: 50
-  probability: 3
-  decay: 0.7
-  minDepth: 5
+  block: {fileID: 4013053502283625171, guid: 5fd0cc413034b48ef8261534a8809f60, type: 3}
+  amount: 200
+  probability: 1.5
+  decay: 0.5
+  minDepth: 70
   maxDepth: 120

@@ -81,14 +81,14 @@ public class MobController : MonoBehaviour
             Destroy(obj);
         }else if(obj.tag == "Player")
         {
-            player.Damage(damage);
+            
             if (gameObject.tag == "Boss")
             {
-
+                player.Damage(player.Health);
             }
             else
             {
-                
+                player.Damage(damage);
                 Destroy(gameObject);
             }
             

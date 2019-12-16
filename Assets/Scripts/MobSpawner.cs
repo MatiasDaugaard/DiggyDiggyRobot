@@ -13,7 +13,6 @@ public class MobSpawner : MonoBehaviour
 
     private Color normalColor;
     private Color bloodColor;
-    private GameObject playerObject;
     private Player player;
 
 
@@ -24,13 +23,12 @@ public class MobSpawner : MonoBehaviour
         bloodmoonChance = 0.0f;
         normalColor = sun.transform.GetComponent<Light>().color;
         bloodColor = new Color(166.0f / 255.0f, 19.0f / 255.0f, 5.0f / 255.0f);
-        playerObject = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void Update()
     {
         long now = System.DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        if (now - timer > 1000)
+        if (now - timer > 1000*60*5)
         {
             timer = now;
             BloodMoon();

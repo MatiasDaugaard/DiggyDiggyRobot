@@ -85,7 +85,7 @@ public class Player
         speedMultiplier = 1.0f;
         weaponDamage = 5.0f;
         miningSpeed = 40;
-        mobKills = 27;
+        mobKills = 0;
         bossKilled = false;
         pc = playerController;
 

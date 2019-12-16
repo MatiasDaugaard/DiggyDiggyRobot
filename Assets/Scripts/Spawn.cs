@@ -91,6 +91,14 @@ public class Spawn : MonoBehaviour
             }
         }
 
+        // Add shop floor
+        for (int i = 0; i < 7; i++)
+        {
+            int x = width / 2 + 3 + i;
+            int y = height - 1;
+            world[x, y] = MineralType.Solid;
+        }
+
         // Generate blocks
         GenerateBlocks();
 

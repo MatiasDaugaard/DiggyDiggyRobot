@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public MineralInventoryPanel inventory; //Maybe move to player class
     public Spawn spawn;
     public SaveSystem saveSystem;
+    public PauseMenu pauseMenu;
+    public PauseMenu deathMenu;
 
     
     private Rigidbody rb;
@@ -147,17 +149,27 @@ public class PlayerController : MonoBehaviour
     {
 
         weapon.transform.position = gameObject.transform.position + new Vector3(0.0f, 0.35f, 0.0f);
+        impactSpeed = rb.velocity.y;
+
         if(player.Health <= 0.0f || player.Fuel <= 0.0f)
         {
-            saveSystem.LoadGame();
+            deathMenu.gameObject.SetActive(true);
+            return;
         }
-        impactSpeed = rb.velocity.y;
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseMenu.gameObject.SetActive(true);
+            return;
+        }
+
         if (rb.position.y > -0.0255f && rb.position.y < -0.0245f && rb.position.z <= 3.5f && rb.position.z >= 2.5f)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Time.timeScale = 0;
                 shopMenu.SetActive(true);
+                return;
             }
             
         }

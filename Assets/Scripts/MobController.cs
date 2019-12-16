@@ -15,7 +15,7 @@ public class MobController : MonoBehaviour
     {
         if(gameObject.tag == "Boss")
         {
-            health = 200.0f;
+            health = 1000.0f;
             damage = 20.0f;
             speed = 150.0f;
         }

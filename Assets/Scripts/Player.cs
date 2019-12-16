@@ -1,24 +1,78 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Player
 {
-    public float health;
+    // Controller
+    private PlayerController pc;
+
+    // Player data
+    private float health;
     public float maxHealth;
     public float speedMultiplier;
-    public float fuel;
+    private float fuel;
     public float maxFuel;
     public float weaponDamage;
     public int miningSpeed;
 
-    private PlayerController pc;
+    public float Health
+    {
+        get { return health; }
+        set
+        {
+            health = value;
+            pc.UpdateHealthBar();
+        }
+    }
+
+    public float Fuel
+    {
+        get { return fuel; }
+        set
+        {
+            fuel = value;
+            pc.UpdateFuelBar();
+        }
+    }
 
     //Equipment variables
+    [SerializeField]
     private bool[] armorUpgrades = { false, false, false, false, false, false };
+    [SerializeField]
     private bool[] fuelUpgrades = { false, false, false, false, false, false };
+    [SerializeField]
     private bool[] jetUpgrades = { false, false, false, false, false, false };
+    [SerializeField]
     private bool[] weaponUpgrades = { false, false, false, false, false, false };
+    [SerializeField]
     private bool[] drillUpgrades = { false, false, false, false, false, false };
+
+    public bool[] ArmorUpgrades
+    {
+        get { return armorUpgrades; }
+        set { armorUpgrades = value; }
+    }
+    public bool[] FuelUpgrades
+    {
+        get { return fuelUpgrades; }
+        set { fuelUpgrades = value; }
+    }
+    public bool[] JetUpgrades
+    {
+        get { return jetUpgrades; }
+        set { jetUpgrades = value; }
+    }
+    public bool[] WeaponUpgrades
+    {
+        get { return weaponUpgrades; }
+        set { weaponUpgrades = value; }
+    }
+    public bool[] DrillUpgrades
+    {
+        get { return drillUpgrades; }
+        set { drillUpgrades = value; }
+    }
 
     public Player(PlayerController playerController)
     {
@@ -46,17 +100,17 @@ public class Player
 
     public void Refuel()
     {
-        fuel = maxFuel;
+        Fuel = maxFuel;
     }
 
     public void Repair()
     {
-        health = maxHealth;
+        Health = maxHealth;
     }
 
     public void Move()
     {
-        fuel -= 0.01f;
+        Fuel -= 0.01f;
     }
 
     private bool UpgradeEquipment(string upgrade)
@@ -396,28 +450,4 @@ public class Player
         }
     }
 
-    public bool[] GetDrillUpgrades()
-    {
-        return drillUpgrades;
-    }
-
-    public bool[] GetArmorUpgrades()
-    {
-        return armorUpgrades;
-    }
-
-    public bool[] GetJetUpgrades()
-    {
-        return jetUpgrades;
-    }
-
-    public bool[] GetFuelUpgrades()
-    {
-        return fuelUpgrades;
-    }
-
-    public bool[] GetWeaponUpgrades()
-    {
-        return weaponUpgrades;
-    }
 }

@@ -7,8 +7,25 @@ using System.Runtime.Serialization.Formatters.Binary;
 [System.Serializable]
 public class GameData
 {
+    // Player controller
     private float[] position;
     private float[] speed;
+
+    // Player data
+    private float health;
+    private float maxHealth;
+    private float speedMultiplier;
+    private float fuel;
+    private float maxFuel;
+    private float weaponDamage;
+    private int miningSpeed;
+    private bool[] armorUpgrades;
+    private bool[] fuelUpgrades;
+    private bool[] jetUpgrades;
+    private bool[] weaponUpgrades;
+    private bool[] drillUpgrades;
+
+    // World data
     private MineralType[,] world;
 
     public Vector3 Position
@@ -34,13 +51,31 @@ public class GameData
         // Collect game data
         GameData data = new GameData();
         Spawn spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawn>();
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        PlayerController controller = player.GetComponent<PlayerController>();
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        PlayerController controller = playerObject.GetComponent<PlayerController>();
+        Player player = controller.Player;
 
-        data.Position = player.transform.position;
+        // Player controller
+        data.Position = playerObject.transform.position;
         data.speed = new float[2];
         data.speed[0] = controller.horisontalSpeed;
         data.speed[1] = controller.verticalSpeed;
+
+        // Player data
+        data.health = player.Health;
+        data.maxHealth = player.maxHealth;
+        data.speedMultiplier = player.speedMultiplier;
+        data.fuel = player.Fuel;
+        data.maxFuel = player.maxFuel;
+        data.weaponDamage = player.weaponDamage;
+        data.miningSpeed = player.miningSpeed;
+        data.armorUpgrades = player.ArmorUpgrades;
+        data.fuelUpgrades = player.FuelUpgrades;
+        data.jetUpgrades = player.JetUpgrades;
+        data.weaponUpgrades = player.WeaponUpgrades;
+        data.drillUpgrades = player.DrillUpgrades;
+
+        // World data
         data.world = spawner.World;
 
         // Serialize data
@@ -63,12 +98,30 @@ public class GameData
 
         // Restore game state
         Spawn spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawn>();
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        PlayerController controller = player.GetComponent<PlayerController>();
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        PlayerController controller = playerObject.GetComponent<PlayerController>();
+        Player player = controller.Player;
 
-        player.transform.position = data.Position;
+        // Player controller
+        playerObject.transform.position = data.Position;
         controller.horisontalSpeed = data.speed[0];
         controller.verticalSpeed = data.speed[1];
+
+        // Player data
+        player.Health = data.health;
+        player.maxHealth = data.maxHealth;
+        player.speedMultiplier = data.speedMultiplier;
+        player.Fuel = data.fuel;
+        player.maxFuel = data.maxFuel;
+        player.weaponDamage = data.weaponDamage;
+        player.miningSpeed = data.miningSpeed;
+        player.ArmorUpgrades = data.armorUpgrades;
+        player.FuelUpgrades = data.fuelUpgrades;
+        player.JetUpgrades = data.jetUpgrades;
+        player.WeaponUpgrades = data.weaponUpgrades;
+        player.DrillUpgrades = data.drillUpgrades;
+
+        // World data
         spawner.LoadWorld(data.world);
 
     }

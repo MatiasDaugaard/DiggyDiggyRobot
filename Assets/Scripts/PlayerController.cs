@@ -112,8 +112,7 @@ public class PlayerController : MonoBehaviour
                     float moveHorizontal = Input.GetAxis("Horizontal");
                     float moveVertical = Input.GetAxis("Vertical");
                     Vector3 movement = new Vector3(0.0f, moveVertical * verticalSpeed, moveHorizontal * horisontalSpeed);
-                    player.Move(); 
-                    UpdateFuelBar();
+                    player.Move();
                     rb.AddForce(movement* player.speedMultiplier);
                     
                 }
@@ -148,11 +147,11 @@ public class PlayerController : MonoBehaviour
     {
 
         weapon.transform.position = gameObject.transform.position + new Vector3(0.0f, 0.35f, 0.0f);
-        if(player.health <= 0.0f){
+        if(player.Health <= 0.0f){
             //Lose stuff from bag
             //Respawn
         }
-        if(player.fuel <= 0.0f){
+        if(player.Fuel <= 0.0f){
             //DIE??
         }
         impactSpeed = rb.velocity.y;
@@ -255,8 +254,7 @@ public class PlayerController : MonoBehaviour
     {
         if (impactSpeed < -5.0f && BlockIsBelow(collision.gameObject.transform.position, gameObject.transform.position))
         {
-            player.health += impactSpeed / 2.0f;
-            UpdateHealthBar();
+            player.Health += impactSpeed / 2.0f;
         }
         OnCollision(collision);
     }
@@ -266,26 +264,14 @@ public class PlayerController : MonoBehaviour
         OnCollision(collision);  
     }
 
-    public void Refuel()
-    {
-        player.Refuel();
-        UpdateFuelBar();
-    }
-
-    public void Repair()
-    {
-        player.Repair();
-        UpdateHealthBar();
-    }
-
     public void UpdateFuelBar()
     {
-        fuelbar.GetComponent<Text>().text = "Litre: " + (int)player.fuel + "/" + (int)player.maxFuel;
+        fuelbar.GetComponent<Text>().text = "Litre: " + (int)player.Fuel + "/" + (int)player.maxFuel;
     }
 
     public void UpdateHealthBar()
     {
-        hpbar.GetComponent<Text>().text = "HP: " + player.health.ToString("n2") + "  ";
+        hpbar.GetComponent<Text>().text = "HP: " + player.Health.ToString("n2") + "  ";
     }
 
     public GameObject mob;

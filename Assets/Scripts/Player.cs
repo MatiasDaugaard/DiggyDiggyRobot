@@ -15,6 +15,8 @@ public class Player
     public float maxFuel;
     public float weaponDamage;
     public int miningSpeed;
+    public int mobKills;
+    public bool bossKilled;
 
     public float Health
     {
@@ -83,6 +85,8 @@ public class Player
         speedMultiplier = 1.0f;
         weaponDamage = 5.0f;
         miningSpeed = 40;
+        mobKills = 27;
+        bossKilled = false;
         pc = playerController;
 
     }

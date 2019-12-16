@@ -62,6 +62,12 @@ public class MobController : MonoBehaviour
         if (health <= 0.0f)
         {
             gameObject.SetActive(false);
+            Destroy(gameObject);
+            player.mobKills += 1;
+            if(gameObject.tag == "Boss")
+            {
+                player.bossKilled = true;
+            }
         }
     }
 

@@ -21,6 +21,8 @@ public class GameData
     private float maxFuel;
     private float weaponDamage;
     private int miningSpeed;
+    private int mobKills;
+    private bool bossKilled;
     private bool[] armorUpgrades;
     private bool[] fuelUpgrades;
     private bool[] jetUpgrades;
@@ -120,6 +122,8 @@ public class GameData
         data.maxFuel = player.maxFuel;
         data.weaponDamage = player.weaponDamage;
         data.miningSpeed = player.miningSpeed;
+        data.mobKills = player.mobKills;
+        data.bossKilled = player.bossKilled;
         data.armorUpgrades = player.ArmorUpgrades;
         data.fuelUpgrades = player.FuelUpgrades;
         data.jetUpgrades = player.JetUpgrades;
@@ -170,6 +174,8 @@ public class GameData
         player.maxFuel = data.maxFuel;
         player.weaponDamage = data.weaponDamage;
         player.miningSpeed = data.miningSpeed;
+        player.mobKills = data.mobKills;
+        player.bossKilled = data.bossKilled;
         player.ArmorUpgrades = data.armorUpgrades;
         player.FuelUpgrades = data.fuelUpgrades;
         player.JetUpgrades = data.jetUpgrades;

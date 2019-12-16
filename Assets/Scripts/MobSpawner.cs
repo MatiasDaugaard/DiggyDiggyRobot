@@ -13,6 +13,8 @@ public class MobSpawner : MonoBehaviour
 
     private Color normalColor;
     private Color bloodColor;
+    private GameObject playerObject;
+    private Player player;
 
 
     
@@ -22,12 +24,13 @@ public class MobSpawner : MonoBehaviour
         bloodmoonChance = 0.0f;
         normalColor = sun.transform.GetComponent<Light>().color;
         bloodColor = new Color(166.0f / 255.0f, 19.0f / 255.0f, 5.0f / 255.0f);
+        playerObject = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void Update()
     {
         long now = System.DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        if (now - timer > 1000*60*5)
+        if (now - timer > 1000)
         {
             timer = now;
             BloodMoon();
@@ -57,12 +60,19 @@ public class MobSpawner : MonoBehaviour
 
     private void SpawnMobs()
     {
-        int r = (int)Random.Range(5.0f, 20.0f);
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Player;
+        if(player.mobKills >= 27 && !player.bossKilled)
+        {
+            GameObject bossMob = Instantiate(boss);
+            Vector3 pos = new Vector3(0.25f, 0.6f, -20.0f);
+            bossMob.transform.position = pos;
+        }
+        int r = (int)Random.Range(2.0f, 10.0f);
         for (int i = 0; i < r; i++)
         {
             GameObject mobInstance = Instantiate(mob);
 
-            Vector3 pos = new Vector3(0.35f, 0.1f, Random.Range(-25.0f, 25.0f));
+            Vector3 pos = new Vector3(0.25f, 0.1f, Random.Range(-22.0f, 25.0f));
             mobInstance.transform.position = pos;
         }
     }

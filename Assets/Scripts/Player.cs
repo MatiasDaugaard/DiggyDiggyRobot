@@ -49,6 +49,11 @@ public class Player
         fuel = maxFuel;
     }
 
+    public void Repair()
+    {
+        health = maxHealth;
+    }
+
     public void Move()
     {
         fuel -= 0.01f;

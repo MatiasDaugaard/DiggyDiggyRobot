@@ -37,7 +37,7 @@ public class ShopMenu : MonoBehaviour
         fueltankButton.onClick.AddListener(FuelOnClick);
         weaponButton.GetComponentInChildren<Text>().text = "Upgrade Weapon";
         weaponButton.onClick.AddListener(WeaponOnClick);
-        refuelButton.GetComponentInChildren<Text>().text = "Refuel";
+        refuelButton.GetComponentInChildren<Text>().text = "Refuel/Repair";
         refuelButton.onClick.AddListener(RefuelOnClick);
         leaveButton.GetComponentInChildren<Text>().text = "Leave";
         leaveButton.onClick.AddListener(LeaveOnClick);
@@ -209,6 +209,7 @@ public class ShopMenu : MonoBehaviour
     void RefuelOnClick()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Refuel();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Repair();
     }
 
 

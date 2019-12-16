@@ -267,6 +267,12 @@ public class PlayerController : MonoBehaviour
         UpdateFuelBar();
     }
 
+    public void Repair()
+    {
+        player.Repair();
+        UpdateHealthBar();
+    }
+
     public void UpdateFuelBar()
     {
         fuelbar.GetComponent<Text>().text = "Litre: " + (int)player.fuel + "/" + (int)player.maxFuel;

@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour
         miningDistanceY = 0.0f;
         miningDistanceZ = 0.0f;
         UpdateMining(player.miningSpeed);
-
     }
 
     private void UpdateMining(int max)

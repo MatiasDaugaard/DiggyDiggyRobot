@@ -7,13 +7,25 @@ public class MobController : MonoBehaviour
 
     private float health;
     private float damage;
+    private float speed;
     private Player player;
     private GameObject playerObject;
 
     void Start()
     {
-        health = 20.0f;
-        damage = 1.0f;
+        if(gameObject.tag == "Boss")
+        {
+            health = 200.0f;
+            damage = 20.0f;
+            speed = 4.0f;
+        }
+        else
+        {
+            health = 20.0f;
+            damage = 4.0f;
+            speed = 1.0f;
+        }
+        
         playerObject = GameObject.FindGameObjectWithTag("Player");
         
     }
@@ -41,7 +53,7 @@ public class MobController : MonoBehaviour
         {
             movement += new Vector3(0.0f, 50.0f, 0.0f);
         }
-        rb.AddForce(movement*1.0f);
+        rb.AddForce(movement*speed);
     }
 
     public void Damage(float x)
@@ -63,8 +75,17 @@ public class MobController : MonoBehaviour
             Destroy(obj);
         }else if(obj.tag == "Player")
         {
-            print("Hit player");
             player.Damage(damage);
+            if (gameObject.tag == "Boss")
+            {
+
+            }
+            else
+            {
+                
+                Destroy(gameObject);
+            }
+            
         }
     }
 }

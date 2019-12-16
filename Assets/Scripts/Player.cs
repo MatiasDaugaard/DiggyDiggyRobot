@@ -91,10 +91,6 @@ public class Player
     {
         health -= dmg;
         pc.UpdateHealthBar();
-        if(health <= 0.0f)
-        {
-            //Die();
-        }
     }
 
 

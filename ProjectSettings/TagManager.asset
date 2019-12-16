@@ -15,6 +15,8 @@ TagManager:
   - Solid
   - Mob
   - Spawner
+  - Light
+  - Boss
   layers:
   - Default
   - TransparentFX

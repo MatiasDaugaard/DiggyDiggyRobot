@@ -40,6 +40,11 @@ public class PlayerController : MonoBehaviour
         get { return player; }
     }
 
+    public Rigidbody Rigidbody
+    {
+        get { return rb; }
+    }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();

@@ -9,7 +9,9 @@ public class GameData
 {
     // Player controller
     private float[] position;
-    private float[] speed;
+    private float[] velocity;
+    private float[] rotation;
+    private float[] angularVelocity;
 
     // Player data
     private float health;
@@ -44,6 +46,52 @@ public class GameData
         }
     }
 
+    public Vector3 Velocity
+    {
+        set
+        {
+            velocity = new float[3];
+            velocity[0] = value.x;
+            velocity[1] = value.y;
+            velocity[2] = value.z;
+        }
+        get
+        {
+            return new Vector3(velocity[0], velocity[1], velocity[2]);
+        }
+    }
+
+    public Quaternion Rotation
+    {
+        set
+        {
+            rotation = new float[4];
+            rotation[0] = value.x;
+            rotation[1] = value.y;
+            rotation[2] = value.z;
+            rotation[3] = value.w;
+        }
+        get
+        {
+            return new Quaternion(rotation[0], rotation[1], rotation[2], rotation[3]);
+        }
+    }
+
+    public Vector3 AngularVelocity
+    {
+        set
+        {
+            angularVelocity = new float[3];
+            angularVelocity[0] = value.x;
+            angularVelocity[1] = value.y;
+            angularVelocity[2] = value.z;
+        }
+        get
+        {
+            return new Vector3(angularVelocity[0], angularVelocity[1], angularVelocity[2]);
+        }
+    }
+
     public static string Path
     {
         get { return Application.persistentDataPath + "game.dat"; }
@@ -59,10 +107,10 @@ public class GameData
         Player player = controller.Player;
 
         // Player controller
-        data.Position = playerObject.transform.position;
-        data.speed = new float[2];
-        data.speed[0] = controller.horisontalSpeed;
-        data.speed[1] = controller.verticalSpeed;
+        data.Position = controller.Rigidbody.position;
+        data.Velocity = controller.Rigidbody.velocity;
+        data.Rotation = controller.Rigidbody.rotation;
+        data.AngularVelocity = controller.Rigidbody.angularVelocity;
 
         // Player data
         data.health = player.Health;
@@ -109,9 +157,10 @@ public class GameData
         Player player = controller.Player;
 
         // Player controller
-        playerObject.transform.position = data.Position;
-        controller.horisontalSpeed = data.speed[0];
-        controller.verticalSpeed = data.speed[1];
+        controller.Rigidbody.position = data.Position;
+        controller.Rigidbody.velocity = data.Velocity;
+        controller.Rigidbody.rotation = data.Rotation;
+        controller.Rigidbody.angularVelocity = data.AngularVelocity;
 
         // Player data
         player.Health = data.health;

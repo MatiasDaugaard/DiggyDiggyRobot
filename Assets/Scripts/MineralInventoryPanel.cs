@@ -12,6 +12,16 @@ public class MineralInventoryPanel : MonoBehaviour
     private Dictionary<MineralType, MineralPanel> panels;
     private Dictionary<MineralType, int> inventory;
 
+    public Dictionary<MineralType, int> Inventory
+    {
+        get { return inventory; }
+        set
+        {
+            inventory = value;
+            UpdatePanel();
+        }
+    }
+
     private void Start()
     {
         panels = new Dictionary<MineralType, MineralPanel>();
@@ -59,6 +69,14 @@ public class MineralInventoryPanel : MonoBehaviour
     public int Get(MineralType mineral)
     {
         return inventory[mineral];
+    }
+
+    private void UpdatePanel()
+    {
+        foreach (KeyValuePair<MineralType, int> entry in inventory)
+        {
+            panels[entry.Key].SetValue(entry.Value);
+        }
     }
 
 }

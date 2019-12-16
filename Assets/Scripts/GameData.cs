@@ -25,6 +25,9 @@ public class GameData
     private bool[] weaponUpgrades;
     private bool[] drillUpgrades;
 
+    // Inventory data
+    private Dictionary<MineralType, int> inventory;
+
     // World data
     private MineralType[,] world;
 
@@ -75,6 +78,9 @@ public class GameData
         data.weaponUpgrades = player.WeaponUpgrades;
         data.drillUpgrades = player.DrillUpgrades;
 
+        // Inventory data
+        data.inventory = controller.inventory.Inventory;
+
         // World data
         data.world = spawner.World;
 
@@ -120,6 +126,9 @@ public class GameData
         player.JetUpgrades = data.jetUpgrades;
         player.WeaponUpgrades = data.weaponUpgrades;
         player.DrillUpgrades = data.drillUpgrades;
+
+        // Inventory data
+        controller.inventory.Inventory = data.inventory;
 
         // World data
         spawner.LoadWorld(data.world);

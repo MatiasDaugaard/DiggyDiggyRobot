@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public GameObject shopMenu;
     public MineralInventoryPanel inventory; //Maybe move to player class
     public Spawn spawn;
+    public SaveSystem saveSystem;
 
     
     private Rigidbody rb;
@@ -147,12 +148,9 @@ public class PlayerController : MonoBehaviour
     {
 
         weapon.transform.position = gameObject.transform.position + new Vector3(0.0f, 0.35f, 0.0f);
-        if(player.Health <= 0.0f){
-            //Lose stuff from bag
-            //Respawn
-        }
-        if(player.Fuel <= 0.0f){
-            //DIE??
+        if(player.Health <= 0.0f || player.Fuel <= 0.0f)
+        {
+            saveSystem.LoadGame();
         }
         impactSpeed = rb.velocity.y;
         if (rb.position.y > -0.0255f && rb.position.y < -0.0245f && rb.position.z <= 3.5f && rb.position.z >= 2.5f)

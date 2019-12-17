@@ -15,9 +15,9 @@ public class MobController : MonoBehaviour
     {
         if(gameObject.tag == "Boss")
         {
-            health = 200.0f;
+            health = 1000.0f;
             damage = 20.0f;
-            speed = 4.0f;
+            speed = 150.0f;
         }
         else
         {
@@ -79,16 +79,16 @@ public class MobController : MonoBehaviour
         {
             Damage(player.weaponDamage);
             Destroy(obj);
-        }else if(obj.tag == "Player")
+        }else if(obj.tag == "Player" || obj.tag == "Weapon")
         {
-            player.Damage(damage);
+            
             if (gameObject.tag == "Boss")
             {
-
+                player.Damage(player.Health);
             }
             else
             {
-                
+                player.Damage(damage);
                 Destroy(gameObject);
             }
             

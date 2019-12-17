@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
                         weapon.SetActive(true);
                     }
                 }
-                else if (Input.GetKeyDown(KeyCode.D) && weapon.activeSelf/* && cooledDown()maybe?*/)
+                else if (Input.GetKeyDown(KeyCode.D) && weapon.activeSelf)
                 {
                     GameObject bulletInstance = Instantiate(bullet);
                     bulletInstance.transform.position = weapon.transform.position + new Vector3(0.0f, 0.0f, 0.225f);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class MainMenu : MonoBehaviour
 {
@@ -13,8 +14,11 @@ public class MainMenu : MonoBehaviour
 
     public void LoadGame()
     {
-        GlobalControl.Instance.NewGame = false;
-        SceneManager.LoadScene(1);
+        if (File.Exists(GameData.Path))
+        {
+            GlobalControl.Instance.NewGame = false;
+            SceneManager.LoadScene(1);
+        }
     }
 
     public void ExitGame()

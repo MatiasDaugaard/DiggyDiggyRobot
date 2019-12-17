@@ -161,6 +161,8 @@ public class PlayerController : MonoBehaviour
             deathMenu.gameObject.SetActive(true);
             return;
         }
+
+        if (pauseMenu.gameObject.active || shopMenu.gameObject.active) return;
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {

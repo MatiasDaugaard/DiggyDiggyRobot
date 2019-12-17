@@ -5,22 +5,10 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
 
-    private Rigidbody rb;
-
-    private void Start()
-    {
-        rb = gameObject.GetComponent<Rigidbody>();
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Solid")
+        string tag = collision.gameObject.tag;
+        if (tag == "Ground" || tag == "Solid")
         {
             Destroy(gameObject);
         }

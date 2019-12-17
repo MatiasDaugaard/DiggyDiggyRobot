@@ -23,9 +23,6 @@ public class MobSpawner : MonoBehaviour
         bloodmoonChance = 0.0f;
         normalColor = sun.transform.GetComponent<Light>().color;
         bloodColor = new Color(166.0f / 255.0f, 19.0f / 255.0f, 5.0f / 255.0f);
-        GameObject bossMob = Instantiate(boss);
-        Vector3 pos = new Vector3(0.25f, 0.6f, -20.0f);
-        bossMob.transform.position = pos;
     }
 
     public void Update()
